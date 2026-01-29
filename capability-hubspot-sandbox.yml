@@ -1,0 +1,666 @@
+naftiko:
+  schema: >-
+    https://github.com/naftiko/schema/blob/main/core/capability/capabiity-schema.yml
+info:
+  name: Hubspot API & MCP Sandbox
+  description: >-
+    This is a Hubspot sandbox that uses OpenAPI, Microcks, Bruno, and Backstage
+    to provide a 3rd-party REST API and MCP sandbox for Hubspot.
+  tags:
+    - CRM
+    - Contacts
+    - Marketing
+ports:
+  source:
+    - aid: hubspot-sandbox
+      title: Hubspot Analytics Events API
+      description: >-
+        The HubSpot Analytics Events API allows you to retrieve event completion
+        data from your HubSpot account. Use this API to query event instances
+        associated with CRM objects, filter by event types, and analyze user
+        behavior and engagement patterns.## Key Features- Retrieve event
+        instances for CRM objects- Filter events by type, date range, and
+        object- Paginate through large result sets- Query available event types
+      openApi:
+        - $ref: openapi/hubspot-analytics-events-api-openapi.yml
+    - aid: hubspot-sandbox
+      title: Hubspot Blog Authors API
+      description: >-
+        The HubSpot Blog Authors API enables you to manage author information
+        for your blog posts. Create, update, retrieve, and delete blog author
+        profiles, manage multi-language author groups, and perform batch
+        operations on multiple authors at once.## Key Features- CRUD operations
+        for blog author profiles- Batch operations for bulk author management-
+        Multi-language support with language variations- Author profile
+        customization with social links
+      openApi:
+        - $ref: openapi/hubspot-authors-api-openapi.yml
+    - aid: hubspot-sandbox
+      title: Hubspot Blog Posts API
+      description: >-
+        The HubSpot Blog Posts API enables you to manage blog posts
+        programmatically. Create, update, publish, and schedule blog posts,
+        manage drafts and revisions, handle multi-language content, and perform
+        batch operations on multiple posts.## Key Features- Full CRUD operations
+        for blog posts- Publishing and scheduling capabilities- Draft and
+        revision management- Multi-language support- Batch operations for bulk
+        management- Post cloning functionality
+      openApi:
+        - $ref: openapi/hubspot-blog-posts-api-openapi.yml
+    - aid: hubspot-sandbox
+      title: Hubspot Commerce Payments API
+      description: >-
+        The HubSpot Commerce Payments API enables developers to manage commerce
+        payment objects within the HubSpot CRM. This API provides comprehensive
+        functionality for creating, reading, updating, archiving, and searching
+        commerce payment records. It supports both individual and batch
+        operations, allowing for efficient management of payment data at
+        scale.Key features include:- CRUD operations for individual commerce
+        payments- Batch operations for processing multiple payments
+        simultaneously- Advanced search capabilities with filtering and sorting-
+        Property history tracking for audit purposes- Association management
+        with other CRM objects
+      openApi:
+        - $ref: openapi/hubspot-commerce-payments-api-openapi.yml
+    - aid: hubspot-sandbox
+      title: Hubspot Conversations API
+      description: >-
+        The HubSpot Conversations API enables you to manage conversation
+        threads, messages, and inboxes programmatically. Use this API to query
+        existing conversations, send messages, manage thread assignments, and
+        seamlessly integrate with your support and sales workflows.## Key
+        Features- **Inbox Management**: Create and configure conversation
+        inboxes for different teams- **Thread Operations**: Create, update, and
+        archive conversation threads- **Messaging**: Send and receive messages
+        with rich text and attachments- **Channel Integration**: Connect
+        multiple communication channels (email, chat, social)- **Actor
+        Management**: Track and manage conversation participants##
+        AuthenticationThis API supports OAuth 2.0 and Private App authentication
+        methods.## Rate LimitsStandard HubSpot API rate limits apply. See
+        HubSpot documentation for details.
+      openApi:
+        - $ref: openapi/hubspot-conversations-api-openapi.yml
+    - aid: hubspot-sandbox
+      title: Hubspot Crm Associations API
+      description: >-
+        The HubSpot CRM Associations API enables you to manage relationships
+        between CRM objects.## OverviewAssociations represent the connections
+        between different CRM records in HubSpot. This API allows you to:-
+        Create, read, update, and delete associations between contacts,
+        companies, deals, tickets, and custom objects- Define custom association
+        types with labels for more granular relationship tracking- Perform batch
+        operations on multiple associations for efficient bulk processing-
+        Manage association labels to categorize and describe relationships##
+        AuthenticationThis API supports OAuth 2.0 and Private App authentication
+        methods.## Rate LimitsStandard HubSpot API rate limits apply. See
+        HubSpot documentation for details.
+      openApi:
+        - $ref: openapi/hubspot-crm-associations-api-openapi.yml
+    - aid: hubspot-sandbox
+      title: Hubspot Crm Feature Flags API
+      description: >-
+        The HubSpot CRM Feature Flags API allows you to manage feature flags for
+        your HubSpot applications.## OverviewFeature flags enable you to control
+        feature rollouts at both the application and portal (account) level.
+        This API provides:- Application-level feature flag management with
+        configurable default states- Portal-specific flag state overrides for
+        targeted feature enablement- Batch operations for efficient bulk
+        management of flag states- Support for gradual rollouts, A/B testing,
+        and controlled feature releases## Flag States- **ON**: Feature is
+        enabled- **OFF**: Feature is disabled- **ABSENT**: No explicit state set
+        (uses default)## AuthenticationThis API requires API key authentication
+        via the `hapikey` query parameter.## Rate LimitsStandard HubSpot API
+        rate limits apply. See HubSpot documentation for details.
+      openApi:
+        - $ref: openapi/hubspot-crm-feature-flags-api-openapi.yml
+    - aid: hubspot-sandbox
+      title: Hubspot Custom Workflow Actions API
+      description: >-
+        The HubSpot Custom Workflow Actions API enables developers to create,
+        manage, and extend workflow automation capabilities within HubSpot. This
+        API allows you to define custom actions that can be used in HubSpot
+        workflows, manage action functions, handle callbacks for asynchronous
+        operations, and track revisions of action definitions.Key features
+        include:- Create and manage custom workflow action definitions- Define
+        input and output fields for actions- Implement serverless functions for
+        pre and post action execution- Handle asynchronous callbacks for
+        long-running operations- Track revision history for action definitions
+      openApi:
+        - $ref: openapi/hubspot-custom-workflow-actions-api-openapi.yml
+    - aid: hubspot-sandbox
+      title: Hubspot Cms Domains API
+      description: >-
+        The HubSpot CMS Domains API allows you to retrieve information about
+        domains connected to a HubSpot CMS site.Use this API to:- List all
+        domains connected to your HubSpot account- Get detailed information
+        about a specific domain by ID- Filter domains by creation or update
+        dates- Check domain configuration status including SSL and DNS
+        settingsDomains can be used for blog posts, site pages, landing pages,
+        emails, and knowledge base articles.
+      openApi:
+        - $ref: openapi/hubspot-domains-api-openapi.yml
+    - aid: hubspot-sandbox
+      title: Hubspot Crm Engagement Calls API
+      description: >-
+        The HubSpot CRM Engagement Calls API enables you to manage call
+        engagements within your HubSpot CRM.Use this API to:- Create, read,
+        update, and delete call records- Perform batch operations on multiple
+        calls- Search for calls using filters and queries- Associate calls with
+        contacts, companies, deals, and other CRM objects- Manage call
+        properties and track call history- Handle GDPR-compliant data
+        purgingCall engagements represent phone calls logged in your CRM and can
+        include details like duration, outcome, notes, and recordings.
+      openApi:
+        - $ref: openapi/hubspot-engagement-calls-api-openapi.yml
+    - aid: hubspot-sandbox
+      title: Hubspot Crm Engagement Notes API
+      description: >-
+        The HubSpot CRM Engagement Notes API enables you to manage note
+        engagements within your HubSpot CRM.Use this API to:- Create, read,
+        update, and delete note records- Perform batch operations on multiple
+        notes- Search for notes using filters and queries- Associate notes with
+        contacts, companies, deals, and other CRM objects- Manage note
+        properties and track note history- Handle GDPR-compliant data
+        purgingNote engagements represent text notes logged in your CRM and can
+        be associated with any CRM record.
+      openApi:
+        - $ref: openapi/hubspot-engagement-notes-openapi.yml
+    - aid: hubspot-sandbox
+      title: Hubspot Marketing Transactional Email API
+      description: >-
+        The HubSpot Marketing Transactional Email API enables you to send
+        transactional emails and manage SMTP tokens.Use this API to:- Create and
+        manage SMTP API tokens for sending transactional emails- Send single
+        transactional emails using pre-defined templates- Query token
+        information and manage token lifecycle- Reset token passwords when
+        neededTransactional emails are one-to-one emails sent in response to
+        specific actions, such as password resets, order confirmations, or
+        account notifications. They differ from marketing emails in that they
+        are triggered by user actions rather than sent to lists.
+      openApi:
+        - $ref: openapi/hubspot-marketing-emal-api-openapi.yml
+    - aid: hubspot-sandbox
+      title: Hubspot Oauth API
+      description: >-
+        The HubSpot OAuth API enables secure authentication and authorization
+        for accessing HubSpot resources.Use these endpoints to manage OAuth
+        tokens, refresh access tokens, and retrieve token metadata
+        forintegrations with the HubSpot platform.
+      openApi:
+        - $ref: openapi/hubspot-oauth-api-openapi.yml
+    - aid: hubspot-sandbox
+      title: Hubspot Cms Source Code API
+      description: >-
+        The HubSpot CMS Source Code API provides programmatic access to files in
+        the CMS Developer File System.Use these endpoints to manage HTML
+        templates, CSS stylesheets, JavaScript files, modules, and otherCMS
+        assets that power your HubSpot website. The API supports both draft and
+        published environments,enabling a robust content development workflow.
+      openApi:
+        - $ref: openapi/hubspot-source-code-api-openapi.yml
+virtualization:
+  sandboxes:
+    - name: Hubspot Analytics Events API REST Sandbox
+      type: http://localhost:8080/rest/hubspot-analytics-events-api/1.0.0
+    - name: Hubspot Analytics Events MCP Sandbox
+      type: http://localhost:8080/rest/hubspot-analytics-events-api/1.0.0/sse
+    - name: Hubspot Blog Authors API REST Sandbox
+      type: http://localhost:8080/rest/hubspot-blog-authors-api/1.0.0
+    - name: Hubspot Blog Authors MCP Sandbox
+      type: http://localhost:8080/rest/hubspot-blog-authors-api/1.0.0/sse
+    - name: Hubspot Blog Posts API REST Sandbox
+      type: http://localhost:8080/rest/hubspot-blog-posts-api/1.0.0
+    - name: Hubspot Blog Posts MCP Sandbox
+      type: http://localhost:8080/rest/hubspot-blog-posts-api/1.0.0/sse
+    - name: Hubspot Commerce Payments API REST Sandbox
+      type: http://localhost:8080/rest/hubspot-commerce-payments-api/1.0.0
+    - name: Hubspot Commerce Payments MCP Sandbox
+      type: http://localhost:8080/rest/hubspot-commerce-payments-api/1.0.0/sse
+    - name: Hubspot Conversations API REST Sandbox
+      type: http://localhost:8080/rest/hubspot-conversations-api/1.0.0
+    - name: Hubspot Conversations MCP Sandbox
+      type: http://localhost:8080/rest/hubspot-conversations-api/1.0.0/sse
+    - name: Hubspot Crm Associations API REST Sandbox
+      type: http://localhost:8080/rest/hubspot-crm-associations-api/1.0.0
+    - name: Hubspot Crm Associations MCP Sandbox
+      type: http://localhost:8080/rest/hubspot-crm-associations-api/1.0.0/sse
+    - name: Hubspot Crm Feature Flags API REST Sandbox
+      type: http://localhost:8080/rest/hubspot-crm-feature-flags-api/1.0.0
+    - name: Hubspot Crm Feature Flags MCP Sandbox
+      type: http://localhost:8080/rest/hubspot-crm-feature-flags-api/1.0.0/sse
+    - name: Hubspot Custom Workflow Actions API REST Sandbox
+      type: http://localhost:8080/rest/hubspot-custom-workflow-actions-api/1.0.0
+    - name: Hubspot Custom Workflow Actions MCP Sandbox
+      type: http://localhost:8080/rest/hubspot-custom-workflow-actions-api/1.0.0/sse
+    - name: Hubspot Cms Domains API REST Sandbox
+      type: http://localhost:8080/rest/hubspot-cms-domains-api/1.0.0
+    - name: Hubspot Cms Domains MCP Sandbox
+      type: http://localhost:8080/rest/hubspot-cms-domains-api/1.0.0/sse
+    - name: Hubspot Crm Engagement Calls API REST Sandbox
+      type: http://localhost:8080/rest/hubspot-crm-engagement-calls-api/1.0.0
+    - name: Hubspot Crm Engagement Calls MCP Sandbox
+      type: http://localhost:8080/rest/hubspot-crm-engagement-calls-api/1.0.0/sse
+    - name: Hubspot Crm Engagement Notes API REST Sandbox
+      type: http://localhost:8080/rest/hubspot-crm-engagement-notes-api/1.0.0
+    - name: Hubspot Crm Engagement Notes MCP Sandbox
+      type: http://localhost:8080/rest/hubspot-crm-engagement-notes-api/1.0.0/sse
+    - name: Hubspot Marketing Transactional Email API REST Sandbox
+      type: >-
+        http://localhost:8080/rest/hubspot-marketing-transactional-email-api/1.0.0
+    - name: Hubspot Marketing Transactional Email MCP Sandbox
+      type: >-
+        http://localhost:8080/rest/hubspot-marketing-transactional-email-api/1.0.0/sse
+    - name: Hubspot Oauth API REST Sandbox
+      type: http://localhost:8080/rest/hubspot-oauth-api/1.0.0
+    - name: Hubspot Oauth MCP Sandbox
+      type: http://localhost:8080/rest/hubspot-oauth-api/1.0.0/sse
+    - name: Hubspot Cms Source Code API REST Sandbox
+      type: http://localhost:8080/rest/hubspot-cms-source-code-api/1.0.0
+    - name: Hubspot Cms Source Code MCP Sandbox
+      type: http://localhost:8080/rest/hubspot-cms-source-code-api/1.0.0/sse
+distribution:
+  backstage:
+    - title: Hubspot Analytics Events API
+      description: >-
+        The HubSpot Analytics Events API allows you to retrieve event completion
+        data from your HubSpot account. Use this API to query event instances
+        associated with CRM objects, filter by event types, and analyze user
+        behavior and engagement patterns.## Key Features- Retrieve event
+        instances for CRM objects- Filter events by type, date range, and
+        object- Paginate through large result sets- Query available event types
+      entity: backstage/hubspot-analytics-events-api-api-sandbox-backstage.yml
+    - title: Hubspot Blog Authors API
+      description: >-
+        The HubSpot Blog Authors API enables you to manage author information
+        for your blog posts. Create, update, retrieve, and delete blog author
+        profiles, manage multi-language author groups, and perform batch
+        operations on multiple authors at once.## Key Features- CRUD operations
+        for blog author profiles- Batch operations for bulk author management-
+        Multi-language support with language variations- Author profile
+        customization with social links
+      entity: backstage/hubspot-authors-api-api-sandbox-backstage.yml
+    - title: Hubspot Blog Posts API
+      description: >-
+        The HubSpot Blog Posts API enables you to manage blog posts
+        programmatically. Create, update, publish, and schedule blog posts,
+        manage drafts and revisions, handle multi-language content, and perform
+        batch operations on multiple posts.## Key Features- Full CRUD operations
+        for blog posts- Publishing and scheduling capabilities- Draft and
+        revision management- Multi-language support- Batch operations for bulk
+        management- Post cloning functionality
+      entity: backstage/hubspot-blog-posts-api-api-sandbox-backstage.yml
+    - title: Hubspot Commerce Payments API
+      description: >-
+        The HubSpot Commerce Payments API enables developers to manage commerce
+        payment objects within the HubSpot CRM. This API provides comprehensive
+        functionality for creating, reading, updating, archiving, and searching
+        commerce payment records. It supports both individual and batch
+        operations, allowing for efficient management of payment data at
+        scale.Key features include:- CRUD operations for individual commerce
+        payments- Batch operations for processing multiple payments
+        simultaneously- Advanced search capabilities with filtering and sorting-
+        Property history tracking for audit purposes- Association management
+        with other CRM objects
+      entity: backstage/hubspot-commerce-payments-api-api-sandbox-backstage.yml
+    - title: Hubspot Conversations API
+      description: >-
+        The HubSpot Conversations API enables you to manage conversation
+        threads, messages, and inboxes programmatically. Use this API to query
+        existing conversations, send messages, manage thread assignments, and
+        seamlessly integrate with your support and sales workflows.## Key
+        Features- **Inbox Management**: Create and configure conversation
+        inboxes for different teams- **Thread Operations**: Create, update, and
+        archive conversation threads- **Messaging**: Send and receive messages
+        with rich text and attachments- **Channel Integration**: Connect
+        multiple communication channels (email, chat, social)- **Actor
+        Management**: Track and manage conversation participants##
+        AuthenticationThis API supports OAuth 2.0 and Private App authentication
+        methods.## Rate LimitsStandard HubSpot API rate limits apply. See
+        HubSpot documentation for details.
+      entity: backstage/hubspot-conversations-api-api-sandbox-backstage.yml
+    - title: Hubspot Crm Associations API
+      description: >-
+        The HubSpot CRM Associations API enables you to manage relationships
+        between CRM objects.## OverviewAssociations represent the connections
+        between different CRM records in HubSpot. This API allows you to:-
+        Create, read, update, and delete associations between contacts,
+        companies, deals, tickets, and custom objects- Define custom association
+        types with labels for more granular relationship tracking- Perform batch
+        operations on multiple associations for efficient bulk processing-
+        Manage association labels to categorize and describe relationships##
+        AuthenticationThis API supports OAuth 2.0 and Private App authentication
+        methods.## Rate LimitsStandard HubSpot API rate limits apply. See
+        HubSpot documentation for details.
+      entity: backstage/hubspot-crm-associations-api-api-sandbox-backstage.yml
+    - title: Hubspot Crm Feature Flags API
+      description: >-
+        The HubSpot CRM Feature Flags API allows you to manage feature flags for
+        your HubSpot applications.## OverviewFeature flags enable you to control
+        feature rollouts at both the application and portal (account) level.
+        This API provides:- Application-level feature flag management with
+        configurable default states- Portal-specific flag state overrides for
+        targeted feature enablement- Batch operations for efficient bulk
+        management of flag states- Support for gradual rollouts, A/B testing,
+        and controlled feature releases## Flag States- **ON**: Feature is
+        enabled- **OFF**: Feature is disabled- **ABSENT**: No explicit state set
+        (uses default)## AuthenticationThis API requires API key authentication
+        via the `hapikey` query parameter.## Rate LimitsStandard HubSpot API
+        rate limits apply. See HubSpot documentation for details.
+      entity: backstage/hubspot-crm-feature-flags-api-api-sandbox-backstage.yml
+    - title: Hubspot Custom Workflow Actions API
+      description: >-
+        The HubSpot Custom Workflow Actions API enables developers to create,
+        manage, and extend workflow automation capabilities within HubSpot. This
+        API allows you to define custom actions that can be used in HubSpot
+        workflows, manage action functions, handle callbacks for asynchronous
+        operations, and track revisions of action definitions.Key features
+        include:- Create and manage custom workflow action definitions- Define
+        input and output fields for actions- Implement serverless functions for
+        pre and post action execution- Handle asynchronous callbacks for
+        long-running operations- Track revision history for action definitions
+      entity: backstage/hubspot-custom-workflow-actions-api-api-sandbox-backstage.yml
+    - title: Hubspot Cms Domains API
+      description: >-
+        The HubSpot CMS Domains API allows you to retrieve information about
+        domains connected to a HubSpot CMS site.Use this API to:- List all
+        domains connected to your HubSpot account- Get detailed information
+        about a specific domain by ID- Filter domains by creation or update
+        dates- Check domain configuration status including SSL and DNS
+        settingsDomains can be used for blog posts, site pages, landing pages,
+        emails, and knowledge base articles.
+      entity: backstage/hubspot-domains-api-api-sandbox-backstage.yml
+    - title: Hubspot Crm Engagement Calls API
+      description: >-
+        The HubSpot CRM Engagement Calls API enables you to manage call
+        engagements within your HubSpot CRM.Use this API to:- Create, read,
+        update, and delete call records- Perform batch operations on multiple
+        calls- Search for calls using filters and queries- Associate calls with
+        contacts, companies, deals, and other CRM objects- Manage call
+        properties and track call history- Handle GDPR-compliant data
+        purgingCall engagements represent phone calls logged in your CRM and can
+        include details like duration, outcome, notes, and recordings.
+      entity: backstage/hubspot-engagement-calls-api-api-sandbox-backstage.yml
+    - title: Hubspot Crm Engagement Notes API
+      description: >-
+        The HubSpot CRM Engagement Notes API enables you to manage note
+        engagements within your HubSpot CRM.Use this API to:- Create, read,
+        update, and delete note records- Perform batch operations on multiple
+        notes- Search for notes using filters and queries- Associate notes with
+        contacts, companies, deals, and other CRM objects- Manage note
+        properties and track note history- Handle GDPR-compliant data
+        purgingNote engagements represent text notes logged in your CRM and can
+        be associated with any CRM record.
+      entity: backstage/hubspot-engagement-notes-api-sandbox-backstage.yml
+    - title: Hubspot Marketing Transactional Email API
+      description: >-
+        The HubSpot Marketing Transactional Email API enables you to send
+        transactional emails and manage SMTP tokens.Use this API to:- Create and
+        manage SMTP API tokens for sending transactional emails- Send single
+        transactional emails using pre-defined templates- Query token
+        information and manage token lifecycle- Reset token passwords when
+        neededTransactional emails are one-to-one emails sent in response to
+        specific actions, such as password resets, order confirmations, or
+        account notifications. They differ from marketing emails in that they
+        are triggered by user actions rather than sent to lists.
+      entity: backstage/hubspot-marketing-emal-api-api-sandbox-backstage.yml
+    - title: Hubspot Oauth API
+      description: >-
+        The HubSpot OAuth API enables secure authentication and authorization
+        for accessing HubSpot resources.Use these endpoints to manage OAuth
+        tokens, refresh access tokens, and retrieve token metadata
+        forintegrations with the HubSpot platform.
+      entity: backstage/hubspot-oauth-api-api-sandbox-backstage.yml
+    - title: Hubspot Cms Source Code API
+      description: >-
+        The HubSpot CMS Source Code API provides programmatic access to files in
+        the CMS Developer File System.Use these endpoints to manage HTML
+        templates, CSS stylesheets, JavaScript files, modules, and otherCMS
+        assets that power your HubSpot website. The API supports both draft and
+        published environments,enabling a robust content development workflow.
+      entity: backstage/hubspot-source-code-api-api-sandbox-backstage.yml
+metrics:
+  numberOfPaths: 96
+  numberOfOperations: 133
+  numberOfReadOperations: 44
+  numberOfWriteOperations: 89
+  numberOfSchemas: 241
+  numberOfResponses: 6
+  numberOfParameters: 58
+  numberOfExamples: 148
+  numberOfRequestBodies: 0
+  numberOfHeaders: 0
+  tags:
+    - Access Tokens
+    - Action Definitions
+    - Action Functions
+    - Actors
+    - Application Feature Flags
+    - Association Label Management
+    - Association Type Definitions
+    - Basic Operations
+    - Batch Association Operations
+    - Batch Operations
+    - Batch Portal Operations
+    - Blog Authors
+    - Blog Posts
+    - Channels
+    - Definition Revisions
+    - Domain Management
+    - Drafts And Revisions
+    - Event Instances
+    - Event Types
+    - File Content
+    - File Extraction
+    - File Metadata
+    - File Validation
+    - Gdpr Compliance
+    - Inboxes
+    - Messages
+    - Multi-language Management
+    - Object Associations
+    - Payment Search
+    - Portal Flag States
+    - Post Cloning
+    - Publishing And Scheduling
+    - Refresh Tokens
+    - Search
+    - Single Payment Operations
+    - Single Send
+    - Smtp Token Management
+    - Threads
+    - Token Management
+    - Workflow Callbacks
+  operations:
+    - Archive A Thread
+    - Archive Multiple Blog Authors
+    - Archive Multiple Blog Posts
+    - Archive a Blog Author
+    - Archive a Blog Post
+    - Archive a batch of calls
+    - Archive a batch of commerce payments
+    - Archive a batch of notes
+    - Archive a call
+    - Archive a commerce payment
+    - Archive a note
+    - Archive an action definition
+    - Attach Author to Language Group
+    - Attach Post to Language Group
+    - Batch archive associations
+    - Batch create associations
+    - Batch create or update portal flag states
+    - Batch delete portal flag states
+    - Batch read associations for multiple objects
+    - Clone a Blog Post
+    - Complete a single callback
+    - Complete multiple callbacks
+    - Create Language Variation
+    - Create Language Variation
+    - Create Multiple Blog Authors
+    - Create Multiple Blog Posts
+    - Create a Blog Author
+    - Create a Blog Post
+    - Create a batch of calls
+    - Create a batch of commerce payments
+    - Create a batch of notes
+    - Create a call
+    - Create a commerce payment
+    - Create a new source code file
+    - Create a note
+    - Create an SMTP token
+    - Create an action definition
+    - Create an association between objects
+    - Create an association label
+    - Create or refresh an access token
+    - Create or update a feature flag
+    - Create or update a function
+    - Create or update a source code file
+    - Delete a feature flag
+    - Delete a function by type
+    - Delete a portal flag state
+    - Delete a source code file
+    - Delete a specific function
+    - Delete an SMTP token
+    - Delete an association between objects
+    - Delete an association label
+    - Detach Author from Language Group
+    - Detach Post from Language Group
+    - Download a source code file
+    - Extract a zip archive
+    - Get Revision History
+    - Get a call by ID
+    - Get a domain by ID
+    - Get a note by ID
+    - Get an SMTP token by ID
+    - Get extraction task status
+    - List Actors
+    - List All Blog Authors
+    - List All Blog Posts
+    - List All Inboxes
+    - List Channels
+    - List Conversation Threads
+    - List Thread Messages
+    - List action definitions
+    - List action functions
+    - List all SMTP tokens
+    - List all association definitions
+    - List all calls
+    - List all domains
+    - List all notes
+    - List association labels
+    - List associations for an object
+    - List commerce payments
+    - List definition revisions
+    - List portal flag states
+    - Permanently delete a call for GDPR compliance
+    - Permanently delete a note for GDPR compliance
+    - Push Draft to Live
+    - Read Multiple Blog Authors
+    - Read Multiple Blog Posts
+    - Read a batch of calls
+    - Read a batch of commerce payments
+    - Read a batch of notes
+    - Reset Draft to Live Version
+    - Reset SMTP token password
+    - Restore a Previous Version
+    - Retrieve A Message
+    - Retrieve A Thread
+    - Retrieve An Actor
+    - Retrieve An Inbox
+    - Retrieve Available Event Types
+    - Retrieve Event Instances
+    - Retrieve a Blog Author
+    - Retrieve a Blog Post
+    - Retrieve a commerce payment
+    - Retrieve a feature flag configuration
+    - Retrieve a portal flag state
+    - Retrieve a specific function
+    - Retrieve a specific revision
+    - Retrieve access token metadata
+    - Retrieve an action definition
+    - Retrieve file or folder metadata
+    - Retrieve function by type
+    - Retrieve refresh token metadata
+    - Revoke a refresh token
+    - Schedule a Blog Post
+    - Search calls
+    - Search commerce payments
+    - Search notes
+    - Send A Message
+    - Send a transactional email
+    - Set New Primary Language
+    - Set New Primary Language
+    - Set a portal flag state
+    - Update A Thread
+    - Update Multiple Blog Authors
+    - Update Multiple Blog Posts
+    - Update a Blog Author
+    - Update a Blog Post
+    - Update a batch of calls
+    - Update a batch of commerce payments
+    - Update a batch of notes
+    - Update a call
+    - Update a commerce payment
+    - Update a note
+    - Update an action definition
+    - Update an association label
+    - Validate a source code file
+useCase:
+  - $ref: >-
+      https://github.com/naftiko/schema/blob/main/secondary/use-case/examples/use-case-example-api-sandbox.yml
+stakeholders:
+  - FN: Kin Lane
+    ROLE: Chief Community Officer (CCO)
+    EMAIL: kinlane@naftiko.io
+    SOCIALPROFILE: https://www.linkedin.com/in/kinlane/
+change:
+  state: New
+  schemaVersion: 0.1.0
+  capabilityVersion: 0.1.0
+  updated: '2026-1-29T00:00:00Z'
+  created: '2026-1-29T00:00:00Z'
+source:
+  httpUrl: https://github.com/naftiko/hubspot-sandbox
+  sshUrl: git@github.com:naftiko/hubspot-sandbox.git
+support:
+  issues: https://github.com/naftiko/hubspot-sandbox/issues
+  discussions: https://github.com/orgs/naftiko/discussions
+standards:
+  - name: Naftiko Capabilities
+    description: This uses a exploratory schema to help inform and shape capabilities.
+    docUrl: https://naftiko.github.io/technology/docs/capabilities/
+  - name: OpenAPI
+    description: This uses OpenAPI to define access to all HTTP APIs.
+    docUrl: https://naftiko.github.io/technology/docs/standards/openapi/
+  - name: JSON Schema
+    description: This uses JSON Schema to define and validate all entities used.
+    docUrl: 'https://naftiko.github.io/technology/docs/standards/json-schema/ '
+  - name: Model Context Protocol
+    description: This uses MCP expresed as JSON schema to define each MCP server.
+    docUrl: >-
+      https://naftiko.github.io/technology/docs/standards/model-context-protocol/
+  - name: Bruno Collections
+    description: >-
+      This uses Bruno Collections to define each executable HTTP API
+      integration.
+    docUrl: https://naftiko.github.io/technology/docs/standards/bruno-collections/
+  - name: Bruno Environments
+    description: >-
+      This uses Bruno Environments to store keys for each API to use in
+      automation.
+    docUrl: https://naftiko.github.io/technology/docs/standards/bruno-environments/
+  - name: API Commons
+    description: This uses an API Commons schema to define the plans and rate limits.
+    docUrl: https://naftiko.github.io/technology/docs/standards/api-commons/
+services:
+  - aid: hubspot
+    name: Hubspot API & MCP Sandbox
+    description: >-
+      This is a Hubspot sandbox that uses OpenAPI, Microcks, Bruno, and
+      Backstage to provide a 3rd-party REST API and MCP sandbox for Hubspot.
+    docUrl: https://naftiko.github.io/technology/docs/services/hubspot/
+    apisJson: >-
+      https://raw.githubusercontent.com/api-evangelist/hubspot/refs/heads/main/apis.yml
+    loginUrl: https://app.hubspot.com/login
+    privacyPolicyUrl: https://legal.hubspot.com/privacy-policy
+observability:
+  visibility: Public
