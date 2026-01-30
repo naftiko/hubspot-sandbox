@@ -1,0 +1,232 @@
+meta {
+  name: Retrieve file or folder metadata
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/cms/v3/source-code/:environment/metadata/:path
+  body: none
+  auth: apikey
+}
+
+params:query {
+  ~properties: 
+}
+
+params:path {
+  environment: 
+  path: 
+}
+
+headers {
+  private-app: {{apiKey}}
+}
+
+auth:apikey {
+  key: private-app
+  value: {{apiKey}}
+  placement: header
+}
+
+example {
+  name: Successful file metadata response
+  description: Example metadata for a template file
+  
+  request: {
+    url: {{baseUrl}}/cms/v3/source-code/:environment/metadata/:path
+    method: GET
+    mode: none
+    params:query: {
+      ~properties: 
+    }
+  
+    params:path: {
+      environment: 
+      path: 
+    }
+  
+    headers: {
+      private-app: {{apiKey}}
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "id": "templates/blog/post.html",
+          "name": "post.html",
+          "folder": false,
+          "hash": "a1b2c3d4e5f6",
+          "createdAt": 1705312200000,
+          "updatedAt": 1705398600000
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: Successful folder metadata response
+  description: Example metadata for a folder with children
+  
+  request: {
+    url: {{baseUrl}}/cms/v3/source-code/:environment/metadata/:path
+    method: GET
+    mode: none
+    params:query: {
+      ~properties: 
+    }
+  
+    params:path: {
+      environment: 
+      path: 
+    }
+  
+    headers: {
+      private-app: {{apiKey}}
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "id": "templates/blog",
+          "name": "blog",
+          "folder": true,
+          "children": [
+            "post.html",
+            "listing.html",
+            "author.html"
+          ],
+          "createdAt": 1705312200000,
+          "updatedAt": 1705398600000
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: Validation error response
+  description: Example error response for invalid input
+  
+  request: {
+    url: {{baseUrl}}/cms/v3/source-code/:environment/metadata/:path
+    method: GET
+    mode: none
+    params:query: {
+      ~properties: 
+    }
+  
+    params:path: {
+      environment: 
+      path: 
+    }
+  
+    headers: {
+      private-app: {{apiKey}}
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: default
+      text: Unknown
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "VALIDATION_ERROR",
+          "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+          "message": "Invalid input (details will vary based on the error)",
+          "context": {
+            "missingScopes": [
+              "scope1",
+              "scope2"
+            ]
+          },
+          "links": {
+            "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+          }
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: Not found error response
+  description: Example error response when file is not found
+  
+  request: {
+    url: {{baseUrl}}/cms/v3/source-code/:environment/metadata/:path
+    method: GET
+    mode: none
+    params:query: {
+      ~properties: 
+    }
+  
+    params:path: {
+      environment: 
+      path: 
+    }
+  
+    headers: {
+      private-app: {{apiKey}}
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: default
+      text: Unknown
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "OBJECT_NOT_FOUND",
+          "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+          "message": "File not found at path: templates/missing.html",
+          "links": {
+            "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+          }
+        }
+      '''
+    }
+  }
+}

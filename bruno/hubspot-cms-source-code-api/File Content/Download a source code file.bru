@@ -1,0 +1,292 @@
+meta {
+  name: Download a source code file
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/cms/v3/source-code/:environment/content/:path
+  body: none
+  auth: apikey
+}
+
+params:path {
+  environment: 
+  path: 
+}
+
+headers {
+  private-app: {{apiKey}}
+}
+
+auth:apikey {
+  key: private-app
+  value: {{apiKey}}
+  placement: header
+}
+
+example {
+  name: Binary file content
+  description: Example binary file download response
+  
+  request: {
+    url: {{baseUrl}}/cms/v3/source-code/:environment/content/:path
+    method: GET
+    mode: none
+    params:path: {
+      environment: 
+      path: 
+    }
+  
+    headers: {
+      private-app: {{apiKey}}
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/octet-stream
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: text
+      content: '''
+        <binary content>
+      '''
+    }
+  }
+}
+
+example {
+  name: HTML template content
+  description: Example HTML template file content
+  
+  request: {
+    url: {{baseUrl}}/cms/v3/source-code/:environment/content/:path
+    method: GET
+    mode: none
+    params:path: {
+      environment: 
+      path: 
+    }
+  
+    headers: {
+      private-app: {{apiKey}}
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: text/html
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: html
+      content: '''
+        {% extends "templates/layouts/base.html" %}
+        {% block content %}
+        <article class="blog-post">
+          <h1>{{ content.title }}</h1>
+          <div class="post-body">
+            {{ content.post_body }}
+          </div>
+        </article>
+        {% endblock %}
+        
+      '''
+    }
+  }
+}
+
+example {
+  name: CSS file content
+  description: Example CSS stylesheet content
+  
+  request: {
+    url: {{baseUrl}}/cms/v3/source-code/:environment/content/:path
+    method: GET
+    mode: none
+    params:path: {
+      environment: 
+      path: 
+    }
+  
+    headers: {
+      private-app: {{apiKey}}
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: text/css
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: text
+      content: '''
+        .blog-post {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 2rem;
+        }
+        .blog-post h1 {
+          font-size: 2.5rem;
+          margin-bottom: 1rem;
+        }
+        
+      '''
+    }
+  }
+}
+
+example {
+  name: JavaScript file content
+  description: Example JavaScript file content
+  
+  request: {
+    url: {{baseUrl}}/cms/v3/source-code/:environment/content/:path
+    method: GET
+    mode: none
+    params:path: {
+      environment: 
+      path: 
+    }
+  
+    headers: {
+      private-app: {{apiKey}}
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/javascript
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: text
+      content: '''
+        document.addEventListener('DOMContentLoaded', function() {
+          const posts = document.querySelectorAll('.blog-post');
+          posts.forEach(post => {
+            post.classList.add('loaded');
+          });
+        });
+        
+      '''
+    }
+  }
+}
+
+example {
+  name: Validation error response
+  description: Example error response for invalid input
+  
+  request: {
+    url: {{baseUrl}}/cms/v3/source-code/:environment/content/:path
+    method: GET
+    mode: none
+    params:path: {
+      environment: 
+      path: 
+    }
+  
+    headers: {
+      private-app: {{apiKey}}
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: default
+      text: Unknown
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "VALIDATION_ERROR",
+          "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+          "message": "Invalid input (details will vary based on the error)",
+          "context": {
+            "missingScopes": [
+              "scope1",
+              "scope2"
+            ]
+          },
+          "links": {
+            "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+          }
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: Not found error response
+  description: Example error response when file is not found
+  
+  request: {
+    url: {{baseUrl}}/cms/v3/source-code/:environment/content/:path
+    method: GET
+    mode: none
+    params:path: {
+      environment: 
+      path: 
+    }
+  
+    headers: {
+      private-app: {{apiKey}}
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: default
+      text: Unknown
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "OBJECT_NOT_FOUND",
+          "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+          "message": "File not found at path: templates/missing.html",
+          "links": {
+            "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+          }
+        }
+      '''
+    }
+  }
+}

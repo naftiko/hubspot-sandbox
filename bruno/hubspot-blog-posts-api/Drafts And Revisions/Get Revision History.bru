@@ -1,0 +1,175 @@
+meta {
+  name: Get Revision History
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/cms/v3/blogs/posts/:objectId/revisions
+  body: none
+  auth: oauth2
+}
+
+params:query {
+  ~limit: 
+  ~after: 
+}
+
+params:path {
+  objectId: 
+}
+
+auth:oauth2 {
+  grant_type: authorization_code
+  callback_url: {{oauth_callback_url}}
+  authorization_url: https://app.hubspot.com/oauth/authorize
+  access_token_url: https://api.hubapi.com/oauth/v1/token
+  refresh_token_url: {{oauth_refresh_url}}
+  client_id: {{oauth_client_id}}
+  client_secret: {{oauth_client_secret}}
+  scope: content
+  state: {{oauth_state}}
+  pkce: false
+  credentials_placement: header
+  credentials_id: 
+  token_placement: header
+  token_header_prefix: Bearer
+  auto_fetch_token: false
+  auto_refresh_token: true
+}
+
+example {
+  name: 200 Response
+  description: Successfully retrieved revisions
+  
+  request: {
+    url: {{baseUrl}}/cms/v3/blogs/posts/:objectId/revisions
+    method: GET
+    mode: none
+    params:query: {
+      ~limit: 
+      ~after: 
+    }
+  
+    params:path: {
+      objectId: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "results": [
+            {
+              "id": "",
+              "object": {
+                "id": "",
+                "name": "",
+                "slug": "",
+                "htmlTitle": "",
+                "postBody": "",
+                "postSummary": "",
+                "blogAuthorId": "",
+                "authorName": "",
+                "contentGroupId": "",
+                "campaign": "",
+                "categoryId": 0,
+                "state": "",
+                "currentState": "",
+                "publishDate": "",
+                "created": "",
+                "updated": "",
+                "archivedAt": "",
+                "currentlyPublished": false,
+                "domain": "",
+                "featuredImage": "",
+                "featuredImageAltText": "",
+                "metaDescription": "",
+                "headHtml": "",
+                "footerHtml": "",
+                "language": "",
+                "translatedFromId": "",
+                "tagIds": [],
+                "useFeaturedImage": false,
+                "url": "",
+                "abStatus": "",
+                "abTestId": "",
+                "folderId": ""
+              },
+              "user": {
+                "id": "",
+                "email": "",
+                "fullName": ""
+              },
+              "timestamp": ""
+            }
+          ],
+          "paging": {
+            "next": {
+              "after": "",
+              "link": ""
+            },
+            "prev": {
+              "before": "",
+              "link": ""
+            }
+          }
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: Validation error
+  
+  request: {
+    url: {{baseUrl}}/cms/v3/blogs/posts/:objectId/revisions
+    method: GET
+    mode: none
+    params:query: {
+      ~limit: 
+      ~after: 
+    }
+  
+    params:path: {
+      objectId: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: default
+      text: Unknown
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "VALIDATION_ERROR",
+          "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+          "message": "Invalid input parameters",
+          "links": {
+            "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+          }
+        }
+      '''
+    }
+  }
+}

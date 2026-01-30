@@ -1,0 +1,256 @@
+meta {
+  name: Create or update a feature flag
+  type: http
+  seq: 2
+}
+
+put {
+  url: {{baseUrl}}/feature-flags/v3/:appId/flags/:flagName
+  body: json
+  auth: apikey
+}
+
+params:query {
+  hapikey: {{apiKey}}
+}
+
+params:path {
+  appId: 
+  flagName: 
+}
+
+auth:apikey {
+  key: hapikey
+  value: {{apiKey}}
+  placement: queryparams
+}
+
+body:json {
+  {
+    "defaultState": ""
+  }
+}
+
+example {
+  name: Example feature flag configuration (Example feature flag input)
+  
+  request: {
+    url: {{baseUrl}}/feature-flags/v3/:appId/flags/:flagName
+    method: PUT
+    mode: json
+    params:query: {
+      hapikey: {{apiKey}}
+    }
+  
+    params:path: {
+      appId: 
+      flagName: 
+    }
+  
+    body:json: {
+      {
+        "defaultState": "ON"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "appId": 12345678,
+          "flagName": "new-dashboard-feature",
+          "defaultState": "OFF",
+          "overrideState": "ABSENT"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 400 Response (Example feature flag input)
+  description: Bad request - Invalid parameters provided
+  
+  request: {
+    url: {{baseUrl}}/feature-flags/v3/:appId/flags/:flagName
+    method: PUT
+    mode: json
+    params:query: {
+      hapikey: {{apiKey}}
+    }
+  
+    params:path: {
+      appId: 
+      flagName: 
+    }
+  
+    body:json: {
+      {
+        "defaultState": "ON"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 400
+      text: Bad Request
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "",
+          "correlationId": "",
+          "message": "",
+          "subCategory": "",
+          "context": {},
+          "links": {},
+          "errors": [
+            {
+              "message": "",
+              "code": "",
+              "subCategory": "",
+              "in": "",
+              "context": {}
+            }
+          ]
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 401 Response (Example feature flag input)
+  description: Unauthorized - Invalid or missing authentication
+  
+  request: {
+    url: {{baseUrl}}/feature-flags/v3/:appId/flags/:flagName
+    method: PUT
+    mode: json
+    params:query: {
+      hapikey: {{apiKey}}
+    }
+  
+    params:path: {
+      appId: 
+      flagName: 
+    }
+  
+    body:json: {
+      {
+        "defaultState": "ON"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 401
+      text: Unauthorized
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "",
+          "correlationId": "",
+          "message": "",
+          "subCategory": "",
+          "context": {},
+          "links": {},
+          "errors": [
+            {
+              "message": "",
+              "code": "",
+              "subCategory": "",
+              "in": "",
+              "context": {}
+            }
+          ]
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 500 Response (Example feature flag input)
+  description: Internal server error
+  
+  request: {
+    url: {{baseUrl}}/feature-flags/v3/:appId/flags/:flagName
+    method: PUT
+    mode: json
+    params:query: {
+      hapikey: {{apiKey}}
+    }
+  
+    params:path: {
+      appId: 
+      flagName: 
+    }
+  
+    body:json: {
+      {
+        "defaultState": "ON"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 500
+      text: Internal Server Error
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "",
+          "correlationId": "",
+          "message": "",
+          "subCategory": "",
+          "context": {},
+          "links": {},
+          "errors": [
+            {
+              "message": "",
+              "code": "",
+              "subCategory": "",
+              "in": "",
+              "context": {}
+            }
+          ]
+        }
+      '''
+    }
+  }
+}

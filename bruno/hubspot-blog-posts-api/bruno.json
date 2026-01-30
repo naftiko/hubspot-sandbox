@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "hubspot-blog-posts-api",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

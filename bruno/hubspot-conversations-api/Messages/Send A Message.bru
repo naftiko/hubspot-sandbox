@@ -1,0 +1,160 @@
+meta {
+  name: Send A Message
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/conversations/v3/conversations/threads/:threadId/messages
+  body: json
+  auth: oauth2
+}
+
+params:path {
+  threadId: 
+}
+
+auth:oauth2 {
+  grant_type: authorization_code
+  callback_url: {{oauth_callback_url}}
+  authorization_url: https://app.hubspot.com/oauth/authorize
+  access_token_url: https://api.hubapi.com/oauth/v1/token
+  refresh_token_url: {{oauth_refresh_url}}
+  client_id: {{oauth_client_id}}
+  client_secret: {{oauth_client_secret}}
+  scope: conversations.read conversations.write
+  state: {{oauth_state}}
+  pkce: false
+  credentials_placement: header
+  credentials_id: 
+  token_placement: header
+  token_header_prefix: Bearer
+  auto_fetch_token: false
+  auto_refresh_token: true
+}
+
+body:json {
+  {
+    "type": "",
+    "text": "",
+    "richText": "",
+    "senderActorId": "",
+    "channelId": "",
+    "channelAccountId": "",
+    "recipients": [
+      {
+        "actorId": ""
+      }
+    ]
+  }
+}
+
+example {
+  name: A complete message record (Example request to send a message)
+  
+  request: {
+    url: {{baseUrl}}/conversations/v3/conversations/threads/:threadId/messages
+    method: POST
+    mode: json
+    params:path: {
+      threadId: 
+    }
+  
+    body:json: {
+      {
+        "type": "MESSAGE",
+        "text": "Thank you for reaching out. How can I help you today?",
+        "senderActorId": "actor_agent_123",
+        "channelId": "channel_789",
+        "channelAccountId": "account_123"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "id": "msg_123456",
+          "type": "MESSAGE",
+          "text": "Hello, I need help with my order.",
+          "direction": "INCOMING",
+          "channelId": "channel_789",
+          "channelAccountId": "account_123",
+          "senders": [
+            {
+              "id": "actor_101",
+              "name": "John Customer",
+              "email": "john@example.com",
+              "type": "VISITOR"
+            }
+          ],
+          "status": {
+            "statusType": "DELIVERED"
+          },
+          "createdAt": "2024-01-20T10:30:00Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: Validation error response (Example request to send a message)
+  
+  request: {
+    url: {{baseUrl}}/conversations/v3/conversations/threads/:threadId/messages
+    method: POST
+    mode: json
+    params:path: {
+      threadId: 
+    }
+  
+    body:json: {
+      {
+        "type": "MESSAGE",
+        "text": "Thank you for reaching out. How can I help you today?",
+        "senderActorId": "actor_agent_123",
+        "channelId": "channel_789",
+        "channelAccountId": "account_123"
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: default
+      text: Unknown
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "VALIDATION_ERROR",
+          "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+          "message": "Invalid input parameters",
+          "context": {
+            "invalidFields": [
+              "threadId"
+            ]
+          }
+        }
+      '''
+    }
+  }
+}

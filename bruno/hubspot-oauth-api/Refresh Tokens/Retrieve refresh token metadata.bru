@@ -1,0 +1,149 @@
+meta {
+  name: Retrieve refresh token metadata
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/oauth/v1/refresh-tokens/:token
+  body: none
+  auth: inherit
+}
+
+params:path {
+  token: 
+}
+
+headers {
+  ~Accept: 
+}
+
+example {
+  name: Successful refresh token metadata retrieval
+  description: Example response when successfully retrieving refresh token metadata
+  
+  request: {
+    url: {{baseUrl}}/oauth/v1/refresh-tokens/:token
+    method: GET
+    mode: none
+    params:path: {
+      token: 
+    }
+  
+    headers: {
+      ~Accept: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "token": "6f18f26a-3e95-4d95-a6e5-3d5c6e5c9e5a",
+          "client_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+          "hub_id": 62515,
+          "user_id": 123456,
+          "user": "user@example.com",
+          "scopes": [
+            "contacts",
+            "content"
+          ]
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: Unauthorized error response
+  description: Example error response for unauthorized requests
+  
+  request: {
+    url: {{baseUrl}}/oauth/v1/refresh-tokens/:token
+    method: GET
+    mode: none
+    params:path: {
+      token: 
+    }
+  
+    headers: {
+      ~Accept: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 401
+      text: Unauthorized
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "UNAUTHORIZED",
+          "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+          "message": "Invalid or expired token",
+          "subCategory": "INVALID_TOKEN"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: Internal server error response
+  description: Example error response for server errors
+  
+  request: {
+    url: {{baseUrl}}/oauth/v1/refresh-tokens/:token
+    method: GET
+    mode: none
+    params:path: {
+      token: 
+    }
+  
+    headers: {
+      ~Accept: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 500
+      text: Internal Server Error
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "SERVER_ERROR",
+          "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+          "message": "An unexpected error occurred",
+          "links": {
+            "knowledge-base": "https://developers.hubspot.com/docs/api/oauth"
+          }
+        }
+      '''
+    }
+  }
+}

@@ -1,0 +1,235 @@
+meta {
+  name: Validate a source code file
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/cms/v3/source-code/:environment/validate/:path
+  body: multipartForm
+  auth: apikey
+}
+
+params:path {
+  environment: 
+  path: 
+}
+
+headers {
+  private-app: {{apiKey}}
+}
+
+auth:apikey {
+  key: private-app
+  value: {{apiKey}}
+  placement: header
+}
+
+body:multipart-form {
+  file: 
+}
+
+example {
+  name: Successful validation response (File upload request)
+  description: Example response when file passes validation
+  
+  request: {
+    url: {{baseUrl}}/cms/v3/source-code/:environment/validate/:path
+    method: POST
+    mode: multipartForm
+    params:path: {
+      environment: 
+      path: 
+    }
+  
+    headers: {
+      private-app: {{apiKey}}
+    }
+  
+    body:multipart-form: {
+      file: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "valid": true,
+          "errors": [],
+          "warnings": []
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: Validation with errors response (File upload request)
+  description: Example response when file has validation errors
+  
+  request: {
+    url: {{baseUrl}}/cms/v3/source-code/:environment/validate/:path
+    method: POST
+    mode: multipartForm
+    params:path: {
+      environment: 
+      path: 
+    }
+  
+    headers: {
+      private-app: {{apiKey}}
+    }
+  
+    body:multipart-form: {
+      file: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "valid": false,
+          "errors": [
+            {
+              "message": "Syntax error: unexpected end of template",
+              "line": 42,
+              "column": 15,
+              "category": "HUBL_SYNTAX"
+            }
+          ],
+          "warnings": [
+            {
+              "message": "Deprecated function 'blog_recent_posts' used",
+              "line": 28,
+              "suggestion": "Use 'blog_posts' function instead"
+            }
+          ]
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: Validation error response (File upload request)
+  description: Example error response for invalid input
+  
+  request: {
+    url: {{baseUrl}}/cms/v3/source-code/:environment/validate/:path
+    method: POST
+    mode: multipartForm
+    params:path: {
+      environment: 
+      path: 
+    }
+  
+    headers: {
+      private-app: {{apiKey}}
+    }
+  
+    body:multipart-form: {
+      file: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: default
+      text: Unknown
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "VALIDATION_ERROR",
+          "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+          "message": "Invalid input (details will vary based on the error)",
+          "context": {
+            "missingScopes": [
+              "scope1",
+              "scope2"
+            ]
+          },
+          "links": {
+            "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+          }
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: Not found error response (File upload request)
+  description: Example error response when file is not found
+  
+  request: {
+    url: {{baseUrl}}/cms/v3/source-code/:environment/validate/:path
+    method: POST
+    mode: multipartForm
+    params:path: {
+      environment: 
+      path: 
+    }
+  
+    headers: {
+      private-app: {{apiKey}}
+    }
+  
+    body:multipart-form: {
+      file: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: default
+      text: Unknown
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "OBJECT_NOT_FOUND",
+          "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+          "message": "File not found at path: templates/missing.html",
+          "links": {
+            "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+          }
+        }
+      '''
+    }
+  }
+}

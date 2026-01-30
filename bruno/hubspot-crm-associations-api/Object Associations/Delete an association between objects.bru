@@ -1,0 +1,106 @@
+meta {
+  name: Delete an association between objects
+  type: http
+  seq: 3
+}
+
+delete {
+  url: {{baseUrl}}/crm/v4/objects/:fromObjectType/:fromObjectId/associations/:toObjectType/:toObjectId
+  body: none
+  auth: oauth2
+}
+
+params:path {
+  fromObjectType: 
+  fromObjectId: 
+  toObjectType: 
+  toObjectId: 
+}
+
+auth:oauth2 {
+  grant_type: authorization_code
+  callback_url: {{oauth_callback_url}}
+  authorization_url: https://app.hubspot.com/oauth/authorize
+  access_token_url: https://api.hubapi.com/oauth/v1/token
+  refresh_token_url: {{oauth_refresh_url}}
+  client_id: {{oauth_client_id}}
+  client_secret: {{oauth_client_secret}}
+  scope: crm.objects.contacts.read crm.objects.contacts.write crm.objects.companies.read crm.objects.companies.write crm.objects.deals.read crm.objects.deals.write
+  state: {{oauth_state}}
+  pkce: false
+  credentials_placement: header
+  credentials_id: 
+  token_placement: header
+  token_header_prefix: Bearer
+  auto_fetch_token: false
+  auto_refresh_token: true
+}
+
+example {
+  name: 204 Response
+  description: Successfully deleted association
+  
+  request: {
+    url: {{baseUrl}}/crm/v4/objects/:fromObjectType/:fromObjectId/associations/:toObjectType/:toObjectId
+    method: DELETE
+    mode: none
+    params:path: {
+      fromObjectType: 
+      fromObjectId: 
+      toObjectType: 
+      toObjectId: 
+    }
+  }
+  
+  response: {
+    status: {
+      code: 204
+      text: No Content
+    }
+  
+    body: {
+      type: text
+      content: '''
+  
+      '''
+    }
+  }
+}
+
+example {
+  name: Example error response
+  
+  request: {
+    url: {{baseUrl}}/crm/v4/objects/:fromObjectType/:fromObjectId/associations/:toObjectType/:toObjectId
+    method: DELETE
+    mode: none
+    params:path: {
+      fromObjectType: 
+      fromObjectId: 
+      toObjectType: 
+      toObjectId: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: default
+      text: Unknown
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "VALIDATION_ERROR",
+          "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+          "message": "Invalid association type"
+        }
+      '''
+    }
+  }
+}

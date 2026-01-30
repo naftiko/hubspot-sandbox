@@ -1,0 +1,320 @@
+meta {
+  name: Create a commerce payment
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/crm/v3/objects/commerce_payments
+  body: json
+  auth: oauth2
+}
+
+auth:oauth2 {
+  grant_type: authorization_code
+  callback_url: {{oauth_callback_url}}
+  authorization_url: https://app.hubspot.com/oauth/authorize
+  access_token_url: https://api.hubapi.com/oauth/v1/token
+  refresh_token_url: {{oauth_refresh_url}}
+  client_id: {{oauth_client_id}}
+  client_secret: {{oauth_client_secret}}
+  scope: crm.objects.commerce_payments.read crm.objects.commerce_payments.write
+  state: {{oauth_state}}
+  pkce: false
+  credentials_placement: header
+  credentials_id: 
+  token_placement: header
+  token_header_prefix: Bearer
+  auto_fetch_token: false
+  auto_refresh_token: true
+}
+
+body:json {
+  {
+    "properties": {},
+    "associations": [
+      {
+        "to": {
+          "id": ""
+        },
+        "types": [
+          {
+            "associationCategory": "",
+            "associationTypeId": 0
+          }
+        ]
+      }
+    ]
+  }
+}
+
+example {
+  name: Successful create payment response (Example create payment request)
+  
+  request: {
+    url: {{baseUrl}}/crm/v3/objects/commerce_payments
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "properties": {
+          "hs_payment_status": "pending",
+          "hs_amount": "350.00",
+          "hs_currency": "USD",
+          "hs_payment_method": "credit_card",
+          "hs_external_payment_id": "ext-pay-12345"
+        },
+        "associations": [
+          {
+            "to": {
+              "id": "501"
+            },
+            "types": [
+              {
+                "associationCategory": "HUBSPOT_DEFINED",
+                "associationTypeId": 187
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "id": "12345678905",
+          "properties": {
+            "hs_payment_status": "pending",
+            "hs_amount": "350.00",
+            "hs_currency": "USD",
+            "hs_payment_method": "credit_card",
+            "hs_external_payment_id": "ext-pay-12345"
+          },
+          "createdAt": "2024-01-20T12:00:00Z",
+          "updatedAt": "2024-01-20T12:00:00Z",
+          "archived": false
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 400 Response (Example create payment request)
+  description: Bad request - Invalid parameters
+  
+  request: {
+    url: {{baseUrl}}/crm/v3/objects/commerce_payments
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "properties": {
+          "hs_payment_status": "pending",
+          "hs_amount": "350.00",
+          "hs_currency": "USD",
+          "hs_payment_method": "credit_card",
+          "hs_external_payment_id": "ext-pay-12345"
+        },
+        "associations": [
+          {
+            "to": {
+              "id": "501"
+            },
+            "types": [
+              {
+                "associationCategory": "HUBSPOT_DEFINED",
+                "associationTypeId": 187
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 400
+      text: Bad Request
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "",
+          "correlationId": "",
+          "message": "",
+          "subCategory": "",
+          "errors": [
+            {
+              "message": "",
+              "code": "",
+              "in": "",
+              "subCategory": "",
+              "context": {}
+            }
+          ],
+          "context": {},
+          "links": {}
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 401 Response (Example create payment request)
+  description: Unauthorized - Invalid or missing authentication
+  
+  request: {
+    url: {{baseUrl}}/crm/v3/objects/commerce_payments
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "properties": {
+          "hs_payment_status": "pending",
+          "hs_amount": "350.00",
+          "hs_currency": "USD",
+          "hs_payment_method": "credit_card",
+          "hs_external_payment_id": "ext-pay-12345"
+        },
+        "associations": [
+          {
+            "to": {
+              "id": "501"
+            },
+            "types": [
+              {
+                "associationCategory": "HUBSPOT_DEFINED",
+                "associationTypeId": 187
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 401
+      text: Unauthorized
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "",
+          "correlationId": "",
+          "message": "",
+          "subCategory": "",
+          "errors": [
+            {
+              "message": "",
+              "code": "",
+              "in": "",
+              "subCategory": "",
+              "context": {}
+            }
+          ],
+          "context": {},
+          "links": {}
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 500 Response (Example create payment request)
+  description: Internal server error
+  
+  request: {
+    url: {{baseUrl}}/crm/v3/objects/commerce_payments
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "properties": {
+          "hs_payment_status": "pending",
+          "hs_amount": "350.00",
+          "hs_currency": "USD",
+          "hs_payment_method": "credit_card",
+          "hs_external_payment_id": "ext-pay-12345"
+        },
+        "associations": [
+          {
+            "to": {
+              "id": "501"
+            },
+            "types": [
+              {
+                "associationCategory": "HUBSPOT_DEFINED",
+                "associationTypeId": 187
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 500
+      text: Internal Server Error
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "",
+          "correlationId": "",
+          "message": "",
+          "subCategory": "",
+          "errors": [
+            {
+              "message": "",
+              "code": "",
+              "in": "",
+              "subCategory": "",
+              "context": {}
+            }
+          ],
+          "context": {},
+          "links": {}
+        }
+      '''
+    }
+  }
+}

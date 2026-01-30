@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "hubspot-custom-workflow-actions-api",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

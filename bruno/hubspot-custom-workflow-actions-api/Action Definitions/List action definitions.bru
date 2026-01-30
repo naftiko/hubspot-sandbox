@@ -1,0 +1,274 @@
+meta {
+  name: List action definitions
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/automation/v4/actions/:appId
+  body: none
+  auth: oauth2
+}
+
+params:query {
+  ~limit: 
+  ~after: 
+  ~archived: 
+}
+
+params:path {
+  appId: 
+}
+
+auth:oauth2 {
+  grant_type: authorization_code
+  callback_url: {{oauth_callback_url}}
+  authorization_url: https://app.hubspot.com/oauth/authorize
+  access_token_url: https://api.hubapi.com/oauth/v1/token
+  refresh_token_url: {{oauth_refresh_url}}
+  client_id: {{oauth_client_id}}
+  client_secret: {{oauth_client_secret}}
+  scope: automation
+  state: {{oauth_state}}
+  pkce: false
+  credentials_placement: header
+  credentials_id: 
+  token_placement: header
+  token_header_prefix: Bearer
+  auto_fetch_token: false
+  auto_refresh_token: true
+}
+
+example {
+  name: Example collection of action definitions
+  
+  request: {
+    url: {{baseUrl}}/automation/v4/actions/:appId
+    method: GET
+    mode: none
+    params:query: {
+      ~limit: 
+      ~after: 
+      ~archived: 
+    }
+  
+    params:path: {
+      appId: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "results": [
+            {
+              "id": "action-def-001",
+              "revisionId": "rev-001",
+              "actionUrl": "https://api.example.com/workflow-actions/execute",
+              "labels": {
+                "actionName": "Send Custom Notification",
+                "appDisplayName": "Custom Notifications App"
+              },
+              "objectTypes": [
+                "CONTACT",
+                "COMPANY"
+              ],
+              "published": true
+            },
+            {
+              "id": "action-def-002",
+              "revisionId": "rev-003",
+              "actionUrl": "https://api.example.com/workflow-actions/sync",
+              "labels": {
+                "actionName": "Sync to External System",
+                "appDisplayName": "Data Sync App"
+              },
+              "objectTypes": [
+                "DEAL"
+              ],
+              "published": true
+            }
+          ],
+          "paging": {
+            "next": {
+              "after": "NTI1Cg%3D%3D"
+            }
+          }
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 400 Response
+  description: Bad request - Invalid parameters
+  
+  request: {
+    url: {{baseUrl}}/automation/v4/actions/:appId
+    method: GET
+    mode: none
+    params:query: {
+      ~limit: 
+      ~after: 
+      ~archived: 
+    }
+  
+    params:path: {
+      appId: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 400
+      text: Bad Request
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "",
+          "correlationId": "",
+          "message": "",
+          "subCategory": "",
+          "errors": [
+            {
+              "message": "",
+              "code": "",
+              "in": "",
+              "subCategory": "",
+              "context": {}
+            }
+          ],
+          "context": {},
+          "links": {}
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 401 Response
+  description: Unauthorized - Invalid or missing authentication
+  
+  request: {
+    url: {{baseUrl}}/automation/v4/actions/:appId
+    method: GET
+    mode: none
+    params:query: {
+      ~limit: 
+      ~after: 
+      ~archived: 
+    }
+  
+    params:path: {
+      appId: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 401
+      text: Unauthorized
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "",
+          "correlationId": "",
+          "message": "",
+          "subCategory": "",
+          "errors": [
+            {
+              "message": "",
+              "code": "",
+              "in": "",
+              "subCategory": "",
+              "context": {}
+            }
+          ],
+          "context": {},
+          "links": {}
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 500 Response
+  description: Internal server error
+  
+  request: {
+    url: {{baseUrl}}/automation/v4/actions/:appId
+    method: GET
+    mode: none
+    params:query: {
+      ~limit: 
+      ~after: 
+      ~archived: 
+    }
+  
+    params:path: {
+      appId: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 500
+      text: Internal Server Error
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "",
+          "correlationId": "",
+          "message": "",
+          "subCategory": "",
+          "errors": [
+            {
+              "message": "",
+              "code": "",
+              "in": "",
+              "subCategory": "",
+              "context": {}
+            }
+          ],
+          "context": {},
+          "links": {}
+        }
+      '''
+    }
+  }
+}

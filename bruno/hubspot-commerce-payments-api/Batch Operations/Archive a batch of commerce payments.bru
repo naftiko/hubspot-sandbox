@@ -1,0 +1,248 @@
+meta {
+  name: Archive a batch of commerce payments
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/crm/v3/objects/commerce_payments/batch/archive
+  body: json
+  auth: oauth2
+}
+
+auth:oauth2 {
+  grant_type: authorization_code
+  callback_url: {{oauth_callback_url}}
+  authorization_url: https://app.hubspot.com/oauth/authorize
+  access_token_url: https://api.hubapi.com/oauth/v1/token
+  refresh_token_url: {{oauth_refresh_url}}
+  client_id: {{oauth_client_id}}
+  client_secret: {{oauth_client_secret}}
+  scope: crm.objects.commerce_payments.read crm.objects.commerce_payments.write
+  state: {{oauth_state}}
+  pkce: false
+  credentials_placement: header
+  credentials_id: 
+  token_placement: header
+  token_header_prefix: Bearer
+  auto_fetch_token: false
+  auto_refresh_token: true
+}
+
+body:json {
+  {
+    "inputs": [
+      {
+        "id": ""
+      }
+    ]
+  }
+}
+
+example {
+  name: 204 Response (Example batch archive request)
+  description: Successfully archived commerce payments
+  
+  request: {
+    url: {{baseUrl}}/crm/v3/objects/commerce_payments/batch/archive
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "inputs": [
+          {
+            "id": "12345678901"
+          },
+          {
+            "id": "12345678902"
+          }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    status: {
+      code: 204
+      text: No Content
+    }
+  
+    body: {
+      type: text
+      content: '''
+  
+      '''
+    }
+  }
+}
+
+example {
+  name: 400 Response (Example batch archive request)
+  description: Bad request - Invalid parameters
+  
+  request: {
+    url: {{baseUrl}}/crm/v3/objects/commerce_payments/batch/archive
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "inputs": [
+          {
+            "id": "12345678901"
+          },
+          {
+            "id": "12345678902"
+          }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 400
+      text: Bad Request
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "",
+          "correlationId": "",
+          "message": "",
+          "subCategory": "",
+          "errors": [
+            {
+              "message": "",
+              "code": "",
+              "in": "",
+              "subCategory": "",
+              "context": {}
+            }
+          ],
+          "context": {},
+          "links": {}
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 401 Response (Example batch archive request)
+  description: Unauthorized - Invalid or missing authentication
+  
+  request: {
+    url: {{baseUrl}}/crm/v3/objects/commerce_payments/batch/archive
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "inputs": [
+          {
+            "id": "12345678901"
+          },
+          {
+            "id": "12345678902"
+          }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 401
+      text: Unauthorized
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "",
+          "correlationId": "",
+          "message": "",
+          "subCategory": "",
+          "errors": [
+            {
+              "message": "",
+              "code": "",
+              "in": "",
+              "subCategory": "",
+              "context": {}
+            }
+          ],
+          "context": {},
+          "links": {}
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 500 Response (Example batch archive request)
+  description: Internal server error
+  
+  request: {
+    url: {{baseUrl}}/crm/v3/objects/commerce_payments/batch/archive
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "inputs": [
+          {
+            "id": "12345678901"
+          },
+          {
+            "id": "12345678902"
+          }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 500
+      text: Internal Server Error
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "",
+          "correlationId": "",
+          "message": "",
+          "subCategory": "",
+          "errors": [
+            {
+              "message": "",
+              "code": "",
+              "in": "",
+              "subCategory": "",
+              "context": {}
+            }
+          ],
+          "context": {},
+          "links": {}
+        }
+      '''
+    }
+  }
+}

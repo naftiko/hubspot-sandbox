@@ -1,0 +1,131 @@
+meta {
+  name: List Actors
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/conversations/v3/conversations/actors
+  body: none
+  auth: oauth2
+}
+
+params:query {
+  ~limit: 
+  ~after: 
+}
+
+auth:oauth2 {
+  grant_type: authorization_code
+  callback_url: {{oauth_callback_url}}
+  authorization_url: https://app.hubspot.com/oauth/authorize
+  access_token_url: https://api.hubapi.com/oauth/v1/token
+  refresh_token_url: {{oauth_refresh_url}}
+  client_id: {{oauth_client_id}}
+  client_secret: {{oauth_client_secret}}
+  scope: conversations.read conversations.write
+  state: {{oauth_state}}
+  pkce: false
+  credentials_placement: header
+  credentials_id: 
+  token_placement: header
+  token_header_prefix: Bearer
+  auto_fetch_token: false
+  auto_refresh_token: true
+}
+
+example {
+  name: Paginated list of actors
+  
+  request: {
+    url: {{baseUrl}}/conversations/v3/conversations/actors
+    method: GET
+    mode: none
+    params:query: {
+      ~limit: 
+      ~after: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "results": [
+            {
+              "id": "actor_101",
+              "actorId": "actor_101",
+              "name": "John Customer",
+              "email": "john@example.com",
+              "type": "VISITOR"
+            },
+            {
+              "id": "actor_agent_123",
+              "actorId": "actor_agent_123",
+              "name": "Support Agent",
+              "email": "support@example.com",
+              "type": "AGENT"
+            }
+          ],
+          "paging": {
+            "next": {
+              "after": "NTI1Cg%3D%3D",
+              "link": "/conversations/v3/conversations/actors?after=NTI1Cg%3D%3D"
+            }
+          }
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: Validation error response
+  
+  request: {
+    url: {{baseUrl}}/conversations/v3/conversations/actors
+    method: GET
+    mode: none
+    params:query: {
+      ~limit: 
+      ~after: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: default
+      text: Unknown
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "VALIDATION_ERROR",
+          "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+          "message": "Invalid input parameters",
+          "context": {
+            "invalidFields": [
+              "threadId"
+            ]
+          }
+        }
+      '''
+    }
+  }
+}

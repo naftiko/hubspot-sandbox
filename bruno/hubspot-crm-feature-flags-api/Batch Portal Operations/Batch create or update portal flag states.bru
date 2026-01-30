@@ -1,0 +1,385 @@
+meta {
+  name: Batch create or update portal flag states
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/feature-flags/v3/:appId/flags/:flagName/portals/batch/upsert
+  body: json
+  auth: apikey
+}
+
+params:query {
+  hapikey: {{apiKey}}
+}
+
+params:path {
+  appId: 
+  flagName: 
+}
+
+auth:apikey {
+  key: hapikey
+  value: {{apiKey}}
+  placement: queryparams
+}
+
+body:json {
+  {
+    "inputs": [
+      {
+        "portalId": 0,
+        "flagState": ""
+      }
+    ]
+  }
+}
+
+example {
+  name: Example successful batch response (Example batch portal flag state input)
+  
+  request: {
+    url: {{baseUrl}}/feature-flags/v3/:appId/flags/:flagName/portals/batch/upsert
+    method: POST
+    mode: json
+    params:query: {
+      hapikey: {{apiKey}}
+    }
+  
+    params:path: {
+      appId: 
+      flagName: 
+    }
+  
+    body:json: {
+      {
+        "inputs": [
+          {
+            "portalId": 98765432,
+            "flagState": "ON"
+          },
+          {
+            "portalId": 87654321,
+            "flagState": "OFF"
+          }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "status": "COMPLETE",
+          "results": [
+            {
+              "appId": 12345678,
+              "flagName": "new-dashboard-feature",
+              "portalId": 98765432,
+              "flagState": "ON"
+            },
+            {
+              "appId": 12345678,
+              "flagName": "new-dashboard-feature",
+              "portalId": 87654321,
+              "flagState": "OFF"
+            }
+          ],
+          "startedAt": "2024-01-15T10:30:00Z",
+          "completedAt": "2024-01-15T10:30:01Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: Example batch response with errors (Example batch portal flag state input)
+  
+  request: {
+    url: {{baseUrl}}/feature-flags/v3/:appId/flags/:flagName/portals/batch/upsert
+    method: POST
+    mode: json
+    params:query: {
+      hapikey: {{apiKey}}
+    }
+  
+    params:path: {
+      appId: 
+      flagName: 
+    }
+  
+    body:json: {
+      {
+        "inputs": [
+          {
+            "portalId": 98765432,
+            "flagState": "ON"
+          },
+          {
+            "portalId": 87654321,
+            "flagState": "OFF"
+          }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 207
+      text: Multi-Status
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "status": "COMPLETE",
+          "results": [
+            {
+              "appId": 12345678,
+              "flagName": "new-dashboard-feature",
+              "portalId": 98765432,
+              "flagState": "ON"
+            }
+          ],
+          "errors": [
+            {
+              "status": "error",
+              "category": "VALIDATION_ERROR",
+              "message": "Invalid portal ID: 99999999",
+              "context": {
+                "portalId": [
+                  "99999999"
+                ]
+              }
+            }
+          ],
+          "startedAt": "2024-01-15T10:30:00Z",
+          "completedAt": "2024-01-15T10:30:01Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 400 Response (Example batch portal flag state input)
+  description: Bad request - Invalid parameters provided
+  
+  request: {
+    url: {{baseUrl}}/feature-flags/v3/:appId/flags/:flagName/portals/batch/upsert
+    method: POST
+    mode: json
+    params:query: {
+      hapikey: {{apiKey}}
+    }
+  
+    params:path: {
+      appId: 
+      flagName: 
+    }
+  
+    body:json: {
+      {
+        "inputs": [
+          {
+            "portalId": 98765432,
+            "flagState": "ON"
+          },
+          {
+            "portalId": 87654321,
+            "flagState": "OFF"
+          }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 400
+      text: Bad Request
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "",
+          "correlationId": "",
+          "message": "",
+          "subCategory": "",
+          "context": {},
+          "links": {},
+          "errors": [
+            {
+              "message": "",
+              "code": "",
+              "subCategory": "",
+              "in": "",
+              "context": {}
+            }
+          ]
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 401 Response (Example batch portal flag state input)
+  description: Unauthorized - Invalid or missing authentication
+  
+  request: {
+    url: {{baseUrl}}/feature-flags/v3/:appId/flags/:flagName/portals/batch/upsert
+    method: POST
+    mode: json
+    params:query: {
+      hapikey: {{apiKey}}
+    }
+  
+    params:path: {
+      appId: 
+      flagName: 
+    }
+  
+    body:json: {
+      {
+        "inputs": [
+          {
+            "portalId": 98765432,
+            "flagState": "ON"
+          },
+          {
+            "portalId": 87654321,
+            "flagState": "OFF"
+          }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 401
+      text: Unauthorized
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "",
+          "correlationId": "",
+          "message": "",
+          "subCategory": "",
+          "context": {},
+          "links": {},
+          "errors": [
+            {
+              "message": "",
+              "code": "",
+              "subCategory": "",
+              "in": "",
+              "context": {}
+            }
+          ]
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 500 Response (Example batch portal flag state input)
+  description: Internal server error
+  
+  request: {
+    url: {{baseUrl}}/feature-flags/v3/:appId/flags/:flagName/portals/batch/upsert
+    method: POST
+    mode: json
+    params:query: {
+      hapikey: {{apiKey}}
+    }
+  
+    params:path: {
+      appId: 
+      flagName: 
+    }
+  
+    body:json: {
+      {
+        "inputs": [
+          {
+            "portalId": 98765432,
+            "flagState": "ON"
+          },
+          {
+            "portalId": 87654321,
+            "flagState": "OFF"
+          }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 500
+      text: Internal Server Error
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "",
+          "correlationId": "",
+          "message": "",
+          "subCategory": "",
+          "context": {},
+          "links": {},
+          "errors": [
+            {
+              "message": "",
+              "code": "",
+              "subCategory": "",
+              "in": "",
+              "context": {}
+            }
+          ]
+        }
+      '''
+    }
+  }
+}

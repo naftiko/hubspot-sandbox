@@ -1,0 +1,419 @@
+meta {
+  name: Create or refresh an access token
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/oauth/v1/token
+  body: formUrlEncoded
+  auth: inherit
+}
+
+headers {
+  ~Content-Type: 
+  ~Accept: 
+}
+
+body:form-urlencoded {
+  grant_type: 
+  client_id: 
+  client_secret: 
+  redirect_uri: 
+  code: 
+  refresh_token: 
+}
+
+example {
+  name: Successful token response (Refresh token request)
+  description: Example response when successfully creating or refreshing an access token
+  
+  request: {
+    url: {{baseUrl}}/oauth/v1/token
+    method: POST
+    mode: formUrlEncoded
+    headers: {
+      ~Content-Type: 
+      ~Accept: 
+    }
+  
+    body:form-urlencoded: {
+      grant_type: 
+      client_id: 
+      client_secret: 
+      redirect_uri: 
+      code: 
+      refresh_token: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "access_token": "CKDZpunPLhICAQEYs-gDIIGOBii1hQIyGQAf3xBKEgsYjYMJVvlHEz9tFHAwSq1TQAM40s0D",
+          "token_type": "bearer",
+          "expires_in": 1800,
+          "refresh_token": "6f18f26a-3e95-4d95-a6e5-3d5c6e5c9e5a"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: Successful token response (Authorization code request)
+  description: Example response when successfully creating or refreshing an access token
+  
+  request: {
+    url: {{baseUrl}}/oauth/v1/token
+    method: POST
+    mode: formUrlEncoded
+    headers: {
+      ~Content-Type: 
+      ~Accept: 
+    }
+  
+    body:form-urlencoded: {
+      grant_type: 
+      client_id: 
+      client_secret: 
+      redirect_uri: 
+      code: 
+      refresh_token: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "access_token": "CKDZpunPLhICAQEYs-gDIIGOBii1hQIyGQAf3xBKEgsYjYMJVvlHEz9tFHAwSq1TQAM40s0D",
+          "token_type": "bearer",
+          "expires_in": 1800,
+          "refresh_token": "6f18f26a-3e95-4d95-a6e5-3d5c6e5c9e5a"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: Bad request error response (Refresh token request)
+  description: Example error response for invalid requests
+  
+  request: {
+    url: {{baseUrl}}/oauth/v1/token
+    method: POST
+    mode: formUrlEncoded
+    headers: {
+      ~Content-Type: 
+      ~Accept: 
+    }
+  
+    body:form-urlencoded: {
+      grant_type: 
+      client_id: 
+      client_secret: 
+      redirect_uri: 
+      code: 
+      refresh_token: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 400
+      text: Bad Request
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "VALIDATION_ERROR",
+          "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+          "message": "Missing required parameter",
+          "subCategory": "MISSING_PARAMETER",
+          "errors": [
+            {
+              "message": "The 'client_secret' parameter is required",
+              "code": "MISSING_REQUIRED_FIELD",
+              "in": "body"
+            }
+          ]
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: Bad request error response (Authorization code request)
+  description: Example error response for invalid requests
+  
+  request: {
+    url: {{baseUrl}}/oauth/v1/token
+    method: POST
+    mode: formUrlEncoded
+    headers: {
+      ~Content-Type: 
+      ~Accept: 
+    }
+  
+    body:form-urlencoded: {
+      grant_type: 
+      client_id: 
+      client_secret: 
+      redirect_uri: 
+      code: 
+      refresh_token: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 400
+      text: Bad Request
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "VALIDATION_ERROR",
+          "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+          "message": "Missing required parameter",
+          "subCategory": "MISSING_PARAMETER",
+          "errors": [
+            {
+              "message": "The 'client_secret' parameter is required",
+              "code": "MISSING_REQUIRED_FIELD",
+              "in": "body"
+            }
+          ]
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: Unauthorized error response (Refresh token request)
+  description: Example error response for unauthorized requests
+  
+  request: {
+    url: {{baseUrl}}/oauth/v1/token
+    method: POST
+    mode: formUrlEncoded
+    headers: {
+      ~Content-Type: 
+      ~Accept: 
+    }
+  
+    body:form-urlencoded: {
+      grant_type: 
+      client_id: 
+      client_secret: 
+      redirect_uri: 
+      code: 
+      refresh_token: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 401
+      text: Unauthorized
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "UNAUTHORIZED",
+          "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+          "message": "Invalid or expired token",
+          "subCategory": "INVALID_TOKEN"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: Unauthorized error response (Authorization code request)
+  description: Example error response for unauthorized requests
+  
+  request: {
+    url: {{baseUrl}}/oauth/v1/token
+    method: POST
+    mode: formUrlEncoded
+    headers: {
+      ~Content-Type: 
+      ~Accept: 
+    }
+  
+    body:form-urlencoded: {
+      grant_type: 
+      client_id: 
+      client_secret: 
+      redirect_uri: 
+      code: 
+      refresh_token: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 401
+      text: Unauthorized
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "UNAUTHORIZED",
+          "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+          "message": "Invalid or expired token",
+          "subCategory": "INVALID_TOKEN"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: Internal server error response (Refresh token request)
+  description: Example error response for server errors
+  
+  request: {
+    url: {{baseUrl}}/oauth/v1/token
+    method: POST
+    mode: formUrlEncoded
+    headers: {
+      ~Content-Type: 
+      ~Accept: 
+    }
+  
+    body:form-urlencoded: {
+      grant_type: 
+      client_id: 
+      client_secret: 
+      redirect_uri: 
+      code: 
+      refresh_token: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 500
+      text: Internal Server Error
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "SERVER_ERROR",
+          "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+          "message": "An unexpected error occurred",
+          "links": {
+            "knowledge-base": "https://developers.hubspot.com/docs/api/oauth"
+          }
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: Internal server error response (Authorization code request)
+  description: Example error response for server errors
+  
+  request: {
+    url: {{baseUrl}}/oauth/v1/token
+    method: POST
+    mode: formUrlEncoded
+    headers: {
+      ~Content-Type: 
+      ~Accept: 
+    }
+  
+    body:form-urlencoded: {
+      grant_type: 
+      client_id: 
+      client_secret: 
+      redirect_uri: 
+      code: 
+      refresh_token: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 500
+      text: Internal Server Error
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "SERVER_ERROR",
+          "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+          "message": "An unexpected error occurred",
+          "links": {
+            "knowledge-base": "https://developers.hubspot.com/docs/api/oauth"
+          }
+        }
+      '''
+    }
+  }
+}

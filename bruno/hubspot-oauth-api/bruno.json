@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "hubspot-oauth-api",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

@@ -1,0 +1,147 @@
+meta {
+  name: List Conversation Threads
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/conversations/v3/conversations/threads
+  body: none
+  auth: oauth2
+}
+
+params:query {
+  ~inboxId: 
+  ~associatedContactId: 
+  ~status: 
+  ~limit: 
+  ~after: 
+  ~sort: 
+}
+
+auth:oauth2 {
+  grant_type: authorization_code
+  callback_url: {{oauth_callback_url}}
+  authorization_url: https://app.hubspot.com/oauth/authorize
+  access_token_url: https://api.hubapi.com/oauth/v1/token
+  refresh_token_url: {{oauth_refresh_url}}
+  client_id: {{oauth_client_id}}
+  client_secret: {{oauth_client_secret}}
+  scope: conversations.read conversations.write
+  state: {{oauth_state}}
+  pkce: false
+  credentials_placement: header
+  credentials_id: 
+  token_placement: header
+  token_header_prefix: Bearer
+  auto_fetch_token: false
+  auto_refresh_token: true
+}
+
+example {
+  name: Paginated list of threads
+  
+  request: {
+    url: {{baseUrl}}/conversations/v3/conversations/threads
+    method: GET
+    mode: none
+    params:query: {
+      ~inboxId: 
+      ~associatedContactId: 
+      ~status: 
+      ~limit: 
+      ~after: 
+      ~sort: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "results": [
+            {
+              "id": "987654321",
+              "inboxId": "12345678",
+              "status": "OPEN",
+              "spam": false,
+              "associatedContactId": "101",
+              "createdAt": "2024-01-15T09:00:00Z",
+              "archived": false
+            },
+            {
+              "id": "987654322",
+              "inboxId": "12345678",
+              "status": "CLOSED",
+              "spam": false,
+              "associatedContactId": "102",
+              "createdAt": "2024-01-14T11:00:00Z",
+              "archived": false
+            }
+          ],
+          "paging": {
+            "next": {
+              "after": "NTI1Cg%3D%3D",
+              "link": "/conversations/v3/conversations/threads?after=NTI1Cg%3D%3D"
+            }
+          }
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: Validation error response
+  
+  request: {
+    url: {{baseUrl}}/conversations/v3/conversations/threads
+    method: GET
+    mode: none
+    params:query: {
+      ~inboxId: 
+      ~associatedContactId: 
+      ~status: 
+      ~limit: 
+      ~after: 
+      ~sort: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: default
+      text: Unknown
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "VALIDATION_ERROR",
+          "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+          "message": "Invalid input parameters",
+          "context": {
+            "invalidFields": [
+              "threadId"
+            ]
+          }
+        }
+      '''
+    }
+  }
+}

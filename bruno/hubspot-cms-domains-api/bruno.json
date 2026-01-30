@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "hubspot-cms-domains-api",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

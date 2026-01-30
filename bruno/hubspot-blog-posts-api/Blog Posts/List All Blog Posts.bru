@@ -1,0 +1,144 @@
+meta {
+  name: List All Blog Posts
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/cms/v3/blogs/posts
+  body: none
+  auth: oauth2
+}
+
+params:query {
+  ~limit: 
+  ~after: 
+  ~sort: 
+  ~archived: 
+  ~property: 
+}
+
+auth:oauth2 {
+  grant_type: authorization_code
+  callback_url: {{oauth_callback_url}}
+  authorization_url: https://app.hubspot.com/oauth/authorize
+  access_token_url: https://api.hubapi.com/oauth/v1/token
+  refresh_token_url: {{oauth_refresh_url}}
+  client_id: {{oauth_client_id}}
+  client_secret: {{oauth_client_secret}}
+  scope: content
+  state: {{oauth_state}}
+  pkce: false
+  credentials_placement: header
+  credentials_id: 
+  token_placement: header
+  token_header_prefix: Bearer
+  auto_fetch_token: false
+  auto_refresh_token: true
+}
+
+example {
+  name: Paginated list of blog posts
+  
+  request: {
+    url: {{baseUrl}}/cms/v3/blogs/posts
+    method: GET
+    mode: none
+    params:query: {
+      ~limit: 
+      ~after: 
+      ~sort: 
+      ~archived: 
+      ~property: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "total": 150,
+          "results": [
+            {
+              "id": "123456789012",
+              "name": "How to Use HubSpot APIs",
+              "slug": "how-to-use-hubspot-apis",
+              "state": "PUBLISHED",
+              "publishDate": "2024-01-15T10:00:00Z",
+              "created": "2024-01-10T09:00:00Z",
+              "updated": "2024-01-15T10:00:00Z",
+              "currentlyPublished": true
+            },
+            {
+              "id": "123456789013",
+              "name": "Getting Started with Webhooks",
+              "slug": "getting-started-with-webhooks",
+              "state": "DRAFT",
+              "created": "2024-01-12T14:00:00Z",
+              "updated": "2024-01-14T16:30:00Z",
+              "currentlyPublished": false
+            }
+          ],
+          "paging": {
+            "next": {
+              "after": "NTI1Cg%3D%3D",
+              "link": "/cms/v3/blogs/posts?after=NTI1Cg%3D%3D"
+            }
+          }
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: Validation error
+  
+  request: {
+    url: {{baseUrl}}/cms/v3/blogs/posts
+    method: GET
+    mode: none
+    params:query: {
+      ~limit: 
+      ~after: 
+      ~sort: 
+      ~archived: 
+      ~property: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: default
+      text: Unknown
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "VALIDATION_ERROR",
+          "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+          "message": "Invalid input parameters",
+          "links": {
+            "knowledge-base": "https://www.hubspot.com/products/service/knowledge-base"
+          }
+        }
+      '''
+    }
+  }
+}

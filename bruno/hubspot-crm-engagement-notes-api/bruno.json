@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "hubspot-crm-engagement-notes-api",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

@@ -1,0 +1,285 @@
+meta {
+  name: Retrieve a portal flag state
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/feature-flags/v3/:appId/flags/:flagName/portals/:portalId
+  body: none
+  auth: apikey
+}
+
+params:query {
+  hapikey: {{apiKey}}
+}
+
+params:path {
+  appId: 
+  flagName: 
+  portalId: 
+}
+
+auth:apikey {
+  key: hapikey
+  value: {{apiKey}}
+  placement: queryparams
+}
+
+example {
+  name: Example portal flag state
+  
+  request: {
+    url: {{baseUrl}}/feature-flags/v3/:appId/flags/:flagName/portals/:portalId
+    method: GET
+    mode: none
+    params:query: {
+      hapikey: {{apiKey}}
+    }
+  
+    params:path: {
+      appId: 
+      flagName: 
+      portalId: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "appId": 12345678,
+          "flagName": "new-dashboard-feature",
+          "portalId": 98765432,
+          "flagState": "ON"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 400 Response
+  description: Bad request - Invalid parameters provided
+  
+  request: {
+    url: {{baseUrl}}/feature-flags/v3/:appId/flags/:flagName/portals/:portalId
+    method: GET
+    mode: none
+    params:query: {
+      hapikey: {{apiKey}}
+    }
+  
+    params:path: {
+      appId: 
+      flagName: 
+      portalId: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 400
+      text: Bad Request
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "",
+          "correlationId": "",
+          "message": "",
+          "subCategory": "",
+          "context": {},
+          "links": {},
+          "errors": [
+            {
+              "message": "",
+              "code": "",
+              "subCategory": "",
+              "in": "",
+              "context": {}
+            }
+          ]
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 401 Response
+  description: Unauthorized - Invalid or missing authentication
+  
+  request: {
+    url: {{baseUrl}}/feature-flags/v3/:appId/flags/:flagName/portals/:portalId
+    method: GET
+    mode: none
+    params:query: {
+      hapikey: {{apiKey}}
+    }
+  
+    params:path: {
+      appId: 
+      flagName: 
+      portalId: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 401
+      text: Unauthorized
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "",
+          "correlationId": "",
+          "message": "",
+          "subCategory": "",
+          "context": {},
+          "links": {},
+          "errors": [
+            {
+              "message": "",
+              "code": "",
+              "subCategory": "",
+              "in": "",
+              "context": {}
+            }
+          ]
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 404 Response
+  description: Portal flag state not found
+  
+  request: {
+    url: {{baseUrl}}/feature-flags/v3/:appId/flags/:flagName/portals/:portalId
+    method: GET
+    mode: none
+    params:query: {
+      hapikey: {{apiKey}}
+    }
+  
+    params:path: {
+      appId: 
+      flagName: 
+      portalId: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 404
+      text: Not Found
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "",
+          "correlationId": "",
+          "message": "",
+          "subCategory": "",
+          "context": {},
+          "links": {},
+          "errors": [
+            {
+              "message": "",
+              "code": "",
+              "subCategory": "",
+              "in": "",
+              "context": {}
+            }
+          ]
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 500 Response
+  description: Internal server error
+  
+  request: {
+    url: {{baseUrl}}/feature-flags/v3/:appId/flags/:flagName/portals/:portalId
+    method: GET
+    mode: none
+    params:query: {
+      hapikey: {{apiKey}}
+    }
+  
+    params:path: {
+      appId: 
+      flagName: 
+      portalId: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 500
+      text: Internal Server Error
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "",
+          "correlationId": "",
+          "message": "",
+          "subCategory": "",
+          "context": {},
+          "links": {},
+          "errors": [
+            {
+              "message": "",
+              "code": "",
+              "subCategory": "",
+              "in": "",
+              "context": {}
+            }
+          ]
+        }
+      '''
+    }
+  }
+}

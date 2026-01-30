@@ -1,0 +1,119 @@
+meta {
+  name: Revoke a refresh token
+  type: http
+  seq: 2
+}
+
+delete {
+  url: {{baseUrl}}/oauth/v1/refresh-tokens/:token
+  body: none
+  auth: inherit
+}
+
+params:path {
+  token: 
+}
+
+example {
+  name: 204 Response
+  description: Refresh token successfully revoked
+  
+  request: {
+    url: {{baseUrl}}/oauth/v1/refresh-tokens/:token
+    method: DELETE
+    mode: none
+    params:path: {
+      token: 
+    }
+  }
+  
+  response: {
+    status: {
+      code: 204
+      text: No Content
+    }
+  
+    body: {
+      type: text
+      content: '''
+  
+      '''
+    }
+  }
+}
+
+example {
+  name: Unauthorized error response
+  description: Example error response for unauthorized requests
+  
+  request: {
+    url: {{baseUrl}}/oauth/v1/refresh-tokens/:token
+    method: DELETE
+    mode: none
+    params:path: {
+      token: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 401
+      text: Unauthorized
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "UNAUTHORIZED",
+          "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+          "message": "Invalid or expired token",
+          "subCategory": "INVALID_TOKEN"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: Internal server error response
+  description: Example error response for server errors
+  
+  request: {
+    url: {{baseUrl}}/oauth/v1/refresh-tokens/:token
+    method: DELETE
+    mode: none
+    params:path: {
+      token: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 500
+      text: Internal Server Error
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "SERVER_ERROR",
+          "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+          "message": "An unexpected error occurred",
+          "links": {
+            "knowledge-base": "https://developers.hubspot.com/docs/api/oauth"
+          }
+        }
+      '''
+    }
+  }
+}

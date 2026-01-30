@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "hubspot-marketing-transactional-email-api",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

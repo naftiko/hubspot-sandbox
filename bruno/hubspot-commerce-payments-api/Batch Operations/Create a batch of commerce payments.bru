@@ -1,0 +1,489 @@
+meta {
+  name: Create a batch of commerce payments
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/crm/v3/objects/commerce_payments/batch/create
+  body: json
+  auth: oauth2
+}
+
+auth:oauth2 {
+  grant_type: authorization_code
+  callback_url: {{oauth_callback_url}}
+  authorization_url: https://app.hubspot.com/oauth/authorize
+  access_token_url: https://api.hubapi.com/oauth/v1/token
+  refresh_token_url: {{oauth_refresh_url}}
+  client_id: {{oauth_client_id}}
+  client_secret: {{oauth_client_secret}}
+  scope: crm.objects.commerce_payments.read crm.objects.commerce_payments.write
+  state: {{oauth_state}}
+  pkce: false
+  credentials_placement: header
+  credentials_id: 
+  token_placement: header
+  token_header_prefix: Bearer
+  auto_fetch_token: false
+  auto_refresh_token: true
+}
+
+body:json {
+  {
+    "inputs": [
+      {
+        "properties": {},
+        "associations": [
+          {
+            "to": {
+              "id": ""
+            },
+            "types": [
+              {
+                "associationCategory": "",
+                "associationTypeId": 0
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
+
+example {
+  name: Successful batch create response (Example batch create request)
+  
+  request: {
+    url: {{baseUrl}}/crm/v3/objects/commerce_payments/batch/create
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "inputs": [
+          {
+            "properties": {
+              "hs_payment_status": "pending",
+              "hs_amount": "150.00",
+              "hs_currency": "USD",
+              "hs_payment_method": "credit_card"
+            },
+            "associations": [
+              {
+                "to": {
+                  "id": "501"
+                },
+                "types": [
+                  {
+                    "associationCategory": "HUBSPOT_DEFINED",
+                    "associationTypeId": 187
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "properties": {
+              "hs_payment_status": "pending",
+              "hs_amount": "275.50",
+              "hs_currency": "USD",
+              "hs_payment_method": "bank_transfer"
+            }
+          }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 201
+      text: Created
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "status": "COMPLETE",
+          "results": [
+            {
+              "id": "12345678903",
+              "properties": {
+                "hs_payment_status": "pending",
+                "hs_amount": "150.00",
+                "hs_currency": "USD",
+                "hs_payment_method": "credit_card"
+              },
+              "createdAt": "2024-01-20T10:00:00Z",
+              "updatedAt": "2024-01-20T10:00:00Z",
+              "archived": false
+            },
+            {
+              "id": "12345678904",
+              "properties": {
+                "hs_payment_status": "pending",
+                "hs_amount": "275.50",
+                "hs_currency": "USD",
+                "hs_payment_method": "bank_transfer"
+              },
+              "createdAt": "2024-01-20T10:00:00Z",
+              "updatedAt": "2024-01-20T10:00:00Z",
+              "archived": false
+            }
+          ],
+          "startedAt": "2024-01-20T10:00:00Z",
+          "completedAt": "2024-01-20T10:00:01Z"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 207 Response (Example batch create request)
+  description: Multi-status response - some payments created successfully, some failed
+  
+  request: {
+    url: {{baseUrl}}/crm/v3/objects/commerce_payments/batch/create
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "inputs": [
+          {
+            "properties": {
+              "hs_payment_status": "pending",
+              "hs_amount": "150.00",
+              "hs_currency": "USD",
+              "hs_payment_method": "credit_card"
+            },
+            "associations": [
+              {
+                "to": {
+                  "id": "501"
+                },
+                "types": [
+                  {
+                    "associationCategory": "HUBSPOT_DEFINED",
+                    "associationTypeId": 187
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "properties": {
+              "hs_payment_status": "pending",
+              "hs_amount": "275.50",
+              "hs_currency": "USD",
+              "hs_payment_method": "bank_transfer"
+            }
+          }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 207
+      text: Multi-Status
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "status": "",
+          "results": [
+            {
+              "id": "",
+              "properties": {},
+              "createdAt": "",
+              "updatedAt": "",
+              "archived": false,
+              "archivedAt": "",
+              "associations": {},
+              "propertiesWithHistory": {}
+            }
+          ],
+          "requestedAt": "",
+          "startedAt": "",
+          "completedAt": "",
+          "numErrors": 0,
+          "errors": [
+            {
+              "status": "",
+              "id": "",
+              "category": "",
+              "message": "",
+              "errors": [
+                {
+                  "message": "",
+                  "code": "",
+                  "in": "",
+                  "subCategory": "",
+                  "context": {}
+                }
+              ],
+              "context": {},
+              "links": {},
+              "subCategory": ""
+            }
+          ],
+          "links": {}
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 400 Response (Example batch create request)
+  description: Bad request - Invalid parameters
+  
+  request: {
+    url: {{baseUrl}}/crm/v3/objects/commerce_payments/batch/create
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "inputs": [
+          {
+            "properties": {
+              "hs_payment_status": "pending",
+              "hs_amount": "150.00",
+              "hs_currency": "USD",
+              "hs_payment_method": "credit_card"
+            },
+            "associations": [
+              {
+                "to": {
+                  "id": "501"
+                },
+                "types": [
+                  {
+                    "associationCategory": "HUBSPOT_DEFINED",
+                    "associationTypeId": 187
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "properties": {
+              "hs_payment_status": "pending",
+              "hs_amount": "275.50",
+              "hs_currency": "USD",
+              "hs_payment_method": "bank_transfer"
+            }
+          }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 400
+      text: Bad Request
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "",
+          "correlationId": "",
+          "message": "",
+          "subCategory": "",
+          "errors": [
+            {
+              "message": "",
+              "code": "",
+              "in": "",
+              "subCategory": "",
+              "context": {}
+            }
+          ],
+          "context": {},
+          "links": {}
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 401 Response (Example batch create request)
+  description: Unauthorized - Invalid or missing authentication
+  
+  request: {
+    url: {{baseUrl}}/crm/v3/objects/commerce_payments/batch/create
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "inputs": [
+          {
+            "properties": {
+              "hs_payment_status": "pending",
+              "hs_amount": "150.00",
+              "hs_currency": "USD",
+              "hs_payment_method": "credit_card"
+            },
+            "associations": [
+              {
+                "to": {
+                  "id": "501"
+                },
+                "types": [
+                  {
+                    "associationCategory": "HUBSPOT_DEFINED",
+                    "associationTypeId": 187
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "properties": {
+              "hs_payment_status": "pending",
+              "hs_amount": "275.50",
+              "hs_currency": "USD",
+              "hs_payment_method": "bank_transfer"
+            }
+          }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 401
+      text: Unauthorized
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "",
+          "correlationId": "",
+          "message": "",
+          "subCategory": "",
+          "errors": [
+            {
+              "message": "",
+              "code": "",
+              "in": "",
+              "subCategory": "",
+              "context": {}
+            }
+          ],
+          "context": {},
+          "links": {}
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 500 Response (Example batch create request)
+  description: Internal server error
+  
+  request: {
+    url: {{baseUrl}}/crm/v3/objects/commerce_payments/batch/create
+    method: POST
+    mode: json
+    body:json: {
+      {
+        "inputs": [
+          {
+            "properties": {
+              "hs_payment_status": "pending",
+              "hs_amount": "150.00",
+              "hs_currency": "USD",
+              "hs_payment_method": "credit_card"
+            },
+            "associations": [
+              {
+                "to": {
+                  "id": "501"
+                },
+                "types": [
+                  {
+                    "associationCategory": "HUBSPOT_DEFINED",
+                    "associationTypeId": 187
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "properties": {
+              "hs_payment_status": "pending",
+              "hs_amount": "275.50",
+              "hs_currency": "USD",
+              "hs_payment_method": "bank_transfer"
+            }
+          }
+        ]
+      }
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 500
+      text: Internal Server Error
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "",
+          "correlationId": "",
+          "message": "",
+          "subCategory": "",
+          "errors": [
+            {
+              "message": "",
+              "code": "",
+              "in": "",
+              "subCategory": "",
+              "context": {}
+            }
+          ],
+          "context": {},
+          "links": {}
+        }
+      '''
+    }
+  }
+}

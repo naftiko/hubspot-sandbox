@@ -1,0 +1,274 @@
+meta {
+  name: Retrieve a feature flag configuration
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/feature-flags/v3/:appId/flags/:flagName
+  body: none
+  auth: apikey
+}
+
+params:query {
+  hapikey: {{apiKey}}
+}
+
+params:path {
+  appId: 
+  flagName: 
+}
+
+auth:apikey {
+  key: hapikey
+  value: {{apiKey}}
+  placement: queryparams
+}
+
+example {
+  name: Example feature flag configuration
+  
+  request: {
+    url: {{baseUrl}}/feature-flags/v3/:appId/flags/:flagName
+    method: GET
+    mode: none
+    params:query: {
+      hapikey: {{apiKey}}
+    }
+  
+    params:path: {
+      appId: 
+      flagName: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 200
+      text: OK
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "appId": 12345678,
+          "flagName": "new-dashboard-feature",
+          "defaultState": "OFF",
+          "overrideState": "ABSENT"
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: Example error response
+  
+  request: {
+    url: {{baseUrl}}/feature-flags/v3/:appId/flags/:flagName
+    method: GET
+    mode: none
+    params:query: {
+      hapikey: {{apiKey}}
+    }
+  
+    params:path: {
+      appId: 
+      flagName: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 400
+      text: Bad Request
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "VALIDATION_ERROR",
+          "correlationId": "aeb5f871-7f07-4993-9211-075dc63e7cbf",
+          "message": "Invalid input JSON",
+          "subCategory": "INVALID_PARAMETER",
+          "errors": [
+            {
+              "message": "flagState is required",
+              "code": "REQUIRED_FIELD",
+              "in": "body"
+            }
+          ]
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 401 Response
+  description: Unauthorized - Invalid or missing authentication
+  
+  request: {
+    url: {{baseUrl}}/feature-flags/v3/:appId/flags/:flagName
+    method: GET
+    mode: none
+    params:query: {
+      hapikey: {{apiKey}}
+    }
+  
+    params:path: {
+      appId: 
+      flagName: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 401
+      text: Unauthorized
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "",
+          "correlationId": "",
+          "message": "",
+          "subCategory": "",
+          "context": {},
+          "links": {},
+          "errors": [
+            {
+              "message": "",
+              "code": "",
+              "subCategory": "",
+              "in": "",
+              "context": {}
+            }
+          ]
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 404 Response
+  description: Feature flag not found
+  
+  request: {
+    url: {{baseUrl}}/feature-flags/v3/:appId/flags/:flagName
+    method: GET
+    mode: none
+    params:query: {
+      hapikey: {{apiKey}}
+    }
+  
+    params:path: {
+      appId: 
+      flagName: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 404
+      text: Not Found
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "",
+          "correlationId": "",
+          "message": "",
+          "subCategory": "",
+          "context": {},
+          "links": {},
+          "errors": [
+            {
+              "message": "",
+              "code": "",
+              "subCategory": "",
+              "in": "",
+              "context": {}
+            }
+          ]
+        }
+      '''
+    }
+  }
+}
+
+example {
+  name: 500 Response
+  description: Internal server error
+  
+  request: {
+    url: {{baseUrl}}/feature-flags/v3/:appId/flags/:flagName
+    method: GET
+    mode: none
+    params:query: {
+      hapikey: {{apiKey}}
+    }
+  
+    params:path: {
+      appId: 
+      flagName: 
+    }
+  }
+  
+  response: {
+    headers: {
+      Content-Type: application/json
+    }
+  
+    status: {
+      code: 500
+      text: Internal Server Error
+    }
+  
+    body: {
+      type: json
+      content: '''
+        {
+          "category": "",
+          "correlationId": "",
+          "message": "",
+          "subCategory": "",
+          "context": {},
+          "links": {},
+          "errors": [
+            {
+              "message": "",
+              "code": "",
+              "subCategory": "",
+              "in": "",
+              "context": {}
+            }
+          ]
+        }
+      '''
+    }
+  }
+}
